@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import "./Home.css"
+import './Home.css'
 import Giveaways from '../components/Giveaways';
 
 const Home = () => {
@@ -28,12 +28,18 @@ const Home = () => {
     }, []);
 
   return (
-    <div>
-      <h1>Wet Jet Performance</h1>
-      <h2>Giveaways</h2>
-      <h3>Current Giveaways</h3>
-      <p>More Wet Jet Performance</p>
-      <Giveaways giveaways={giveaways}/>
+    <div className='home-body'>
+      <div className='landing-page'>
+        <h1 className='site-title'>Wet Jet Performance</h1>
+        <h2 className='site-title'>Giveaways</h2>
+        <div className='landing-links'>
+          <h3 id='current-giveaways-header'>Current Giveaways</h3>
+          <p id='more-wjp-link'>More Wet Jet Performance</p>
+        </div>
+      </div>
+      <div className='current-giveaways'>
+       <Giveaways giveaways={giveaways}/>
+      </div> 
     </div>
   );
 };

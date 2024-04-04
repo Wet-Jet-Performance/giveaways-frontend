@@ -1,0 +1,40 @@
+.home-body {
+
+}
+
+.landing-page {
+  height: 100vh;
+  margin: 2vw;
+  line-height: 0.5;
+}
+
+
+.site-title  {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-weight: bold;
+  font-size: 8vw;
+  color: rgb(163, 160, 242);
+  letter-spacing: 10px;
+}
+
+.landing-links {
+  background-color: black;
+  height: 30vh;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-weight: bold;
+  font-size: 6vw;
+  color: rgb(223, 126, 126);
+  letter-spacing: 10px;
+}
+
+#current-giveaways-header {
+
+}
+
+#more-wjp-link {
+  text-align: right;
+}
+
+.current-giveaways {
+
+}
