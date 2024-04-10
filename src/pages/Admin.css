@@ -1,0 +1,11 @@
+#create-giveaway-button {
+
+}
+
+.create-giveaway-modal-hidden {
+  display: hidden;
+}
+
+.create-giveaway-modal-visible {
+  display: block;
+}

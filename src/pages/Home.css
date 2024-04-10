@@ -1,40 +1,70 @@
 .home-body {
-
-}
-
-.landing-page {
   height: 100vh;
-  margin: 2vw;
-  line-height: 0.5;
+  margin: 0;
+  display: grid;
+  grid-template-rows: [titles-start] 50% [divider] 50% [links-end];
+  grid-template-columns: 100%;
 }
 
-
-.site-title  {
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  font-weight: bold;
-  font-size: 8vw;
-  color: rgb(163, 160, 242);
-  letter-spacing: 10px;
-}
-
-.landing-links {
+.black-background {
+  position: absolute;
   background-color: black;
-  height: 30vh;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  font-weight: bold;
-  font-size: 6vw;
-  color: rgb(223, 126, 126);
-  letter-spacing: 10px;
+  left: 0;
+  bottom: 0;
+  height: 50vh;
+  width: 100%;
+  z-index: -1;
+  grid-row: divider / links-end;
+  grid-column: 1/2;
 }
 
-#current-giveaways-header {
+.landing-titles  {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  grid-row: titles-start / divider;
+  grid-column: 1/2;
+}
 
+.site-title {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-weight: bold;
+  font-size: 12vh;
+  color: rgb(105, 157, 235);
+  letter-spacing: 10px;
+  margin-left: 2vw;
+  white-space: nowrap;
+}
+
+#landing-links {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  grid-row: divider / links-end;
+  grid-column: 1/2;
+  white-space: nowrap;
+}
+
+#current-giveaways-link {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-weight: bold;
+  font-size: 10vh;
+  color: rgb(217, 100, 129);
+  letter-spacing: 10px;
+  margin-left: 2vw;
+  text-decoration: none;
+}
+
+#current-giveaways-link:hover {
+  color: yellow;
 }
 
 #more-wjp-link {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-weight: bold;
+  font-size: 6vh;
+  color: rgb(217, 100, 129);
+  letter-spacing: 10px;
   text-align: right;
-}
-
-.current-giveaways {
-
+  margin-right: 2vw;
 }
