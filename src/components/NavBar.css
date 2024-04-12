@@ -1,0 +1,179 @@
+@media screen and (min-width: 700px) {
+    nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        padding:10px 2vw;
+        width: 100%;
+        position: fixed;
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+        box-sizing: border-box; 
+        top: 0px;
+        background-color: rgb(26, 26, 26);
+        box-shadow: 5px 5px rgba(107, 223, 89, 0.353);
+        z-index: 10;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    nav a {
+        font-family: Arial, Trebuchet MS, sans-serif;
+        font-size: 12px;
+        letter-spacing: 3px;
+        margin: 5px;
+        font-weight: bold;
+        text-decoration: none;
+        white-space: nowrap;
+        color: white;
+        padding: 15px;
+        border-radius: 1px;
+        /* background-color: rgb(72, 71, 71); */
+        transition: background-color 0.7s, box-shadow 0.7s, margin-left 0.7s, margin-right 0.7s, transform 0.7s;
+    }
+
+    nav a:hover {
+        background-color: rgba(241, 85, 85, 0.861);
+    }
+
+    .active {
+        font-weight: bold;
+        color: rgba(255, 18, 18, 0.861);
+        pointer-events: none;
+    }
+
+    #site-title {
+        font-family: Arial, Trebuchet MS, sans-serif;
+        font-size: 24px;
+        letter-spacing: 3px;
+        text-align: right;
+        margin: auto;
+        margin-right: 1vw;
+        font-style: italic;
+        color: white;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    nav.hide-links {
+        display: grid;
+        grid-template-columns: 35px auto;
+        grid-template-rows: 100% 0;
+        margin-top: 10px;
+        padding:10px 5vw;
+        width: 100%;
+        position: fixed;
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+        box-sizing: border-box; 
+        top: 0px;
+        background-color: rgb(212, 228, 210);
+        box-shadow: 5px 5px rgba(107, 223, 89, 0.353);
+        z-index: 10;
+        overflow: hidden;
+        transition: grid-template-rows 0.7s;
+    }
+
+    nav.show-links {
+        display: grid;
+        grid-template-columns: 35px auto;
+        grid-template-rows: 10% 90%;
+        margin-top: 10px;
+        padding:10px 5vw;
+        width: 100%;
+        position: fixed;
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+        box-sizing: border-box; 
+        top: 0px;
+        background-color: rgb(212, 228, 210);
+        box-shadow: 5px 5px rgba(107, 223, 89, 0.353);
+        z-index: 10;
+        transition: grid-template-rows 0.7s;
+    }
+
+    #hamburger-icon {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 0 7px;
+        width: 40px;
+        height: 30px;
+        grid-column: 1 / 2;
+    }
+
+    #hamburger-bar1 {
+        background-color: rgb(249, 246, 246);
+        width: 100%;
+        border-radius: 5px;
+        height: 5px;
+    }
+
+    #hamburger-bar2 {
+        background-color: rgb(249, 246, 246);
+        width: 100%;
+        border-radius: 5px;
+        height: 5px;
+    }
+
+    #hamburger-bar3 {
+        background-color: rgb(249, 246, 246);
+        width: 100%;
+        border-radius: 5px;
+        height: 5px;
+    }
+
+    .hide-links .nav-links {
+        display: none;
+    }
+
+    .show-links .nav-links {
+        display: flex;
+        margin-top: 10px;
+        flex-direction: column;
+        grid-column: 1 / 3;
+        grid-row: 2 / 3;
+    }
+    
+    nav a {
+        font-family: Arial, Trebuchet MS, sans-serif;
+        font-size: 12px;
+        letter-spacing: 3px;
+        margin: 5px;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+        padding: 15px;
+        border-radius: 4px;
+        background-color: rgb(176, 188, 210);
+        transition: background-color 0.7s, box-shadow 0.7s;
+    }
+    
+    nav a:hover {
+        background-color: rgba(222, 156, 200, 0.399);
+        box-shadow: 3px 3px rgba(187, 75, 163, 0.702);
+        transition: background-color 0.7s, box-shadow 0.7s;
+    }
+    
+    .active {
+        font-weight: bold;
+        color: rgba(205, 60, 241, 0.861);
+        pointer-events: none;
+    }
+    
+    #site-title {
+        font-family: Arial, Trebuchet MS, sans-serif;
+        font-size: 24px;
+        letter-spacing: 3px;
+        margin: auto;
+        margin-right: 1vw;
+        font-style: italic;
+        color: white;
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+    }
+  }
