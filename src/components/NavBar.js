@@ -16,7 +16,6 @@ const NavBar = () => {
       <div className='nav-links'>
         <NavLink to='/'>HOME</NavLink>
         <NavLink to='/giveaways'>GIVEAWAYS</NavLink>
-        <NavLink to='/admin'>ADMIN</NavLink>
       </div>
       <p id='site-title'> Wet Jet Performance </p>
     </nav>
