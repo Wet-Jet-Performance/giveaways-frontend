@@ -1,11 +1,13 @@
-#create-giveaway-button {
-
+.admin-body {
+  margin: 100px 3vw 3vh 3vw;
+  display: grid;
+  grid-template-columns: 30vw 70vw;
 }
 
-.create-giveaway-modal-hidden {
-  display: hidden;
+.admin-giveaways {
+  grid-column: 1 / 2;
 }
 
-.create-giveaway-modal-visible {
-  display: block;
+.admin-tickets {
+  grid-column: 2 / 3;
 }

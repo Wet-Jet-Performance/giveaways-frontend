@@ -10,8 +10,16 @@ function App() {
   const api = 'http://127.0.0.1:5000'
 
   const [giveaways, setGiveaways] = useState([]);
+  const [tickets, setTickets] = useState([]);
+  const [participants, setParticipants] = useState([]);
 
   useEffect(() => {
+    getGiveaways();
+    getTickets();
+    
+  }, []);
+
+  const getGiveaways = () => {
     axios
       .get(`${api}/giveaways`)
       .then((response) => {
@@ -28,7 +36,30 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }
+
+  const getTickets = () => {
+    axios
+      .get(`${api}/tickets`)
+      .then((response) => {
+        const newTickets = response.data.map((ticket) => {
+          return {
+            id: ticket.id,
+            giveaway_id: ticket.giveaway_id,
+            participant_id: ticket.participant_id,
+            giveaway_name: ticket.giveaway_name,
+            participant_name: ticket.participant_name,
+            participant_phone: ticket.participant_phone,
+            participant_email: ticket.participant_email
+            
+          };
+        });
+        setTickets(newTickets);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   const createGiveaway = (newGiveaway) => {
     axios
@@ -89,12 +120,29 @@ function App() {
       });
   }
 
+  const createTicket = (newTicket) => {
+    axios
+      .post(`${api}/tickets`, newTicket)
+      .then((response) => {
+        getTickets();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/giveaways" element={<CurrentGiveaways giveaways={giveaways} />} />
-      <Route path="/admin" element={<Admin giveaways={giveaways} createGiveawayCallback={createGiveaway} deleteGiveawayCallback={deleteGiveaway} updateGiveawayCallback={updateGiveaway}/>} />
+      <Route path="/admin" element={
+        <Admin
+            giveaways={giveaways}
+            tickets={tickets}
+            createGiveawayCallback={createGiveaway}
+            deleteGiveawayCallback={deleteGiveaway}
+            updateGiveawayCallback={updateGiveaway}
+            createTicketCallback={createTicket}/>} />
     </Routes>
   );
 }
