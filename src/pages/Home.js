@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import Footer from "../components/Footer";
 import './Home.css'
 
 const Home = () => {
@@ -12,8 +13,9 @@ const Home = () => {
       </div>
       <div id='landing-links'>
         <NavLink id='current-giveaways-link' to="/giveaways">Current Giveaways</NavLink>
-        <p id='more-wjp-link'>More Wet Jet Performance</p>
+        <a href='https://wetjetperformance.com/' id='more-wjp-link'>More Wet Jet Performance</a>
       </div>
+      <Footer />
     </div>
   );
 };
