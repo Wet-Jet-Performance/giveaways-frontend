@@ -16,6 +16,7 @@ function App() {
   useEffect(() => {
     getGiveaways();
     getTickets();
+    getParticipants();
     
   }, []);
 
@@ -55,6 +56,26 @@ function App() {
           };
         });
         setTickets(newTickets);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  const getParticipants = () => {
+    axios
+      .get(`${api}/participants`)
+      .then((response) => {
+        const newParticipants = response.data.map((participant) => {
+          return {
+            id: participant.id,
+            name: participant.name,
+            phone_number: participant.phone_number,
+            email: participant.email
+            
+          };
+        });
+        setParticipants(newParticipants);
       })
       .catch((err) => {
         console.log(err);
@@ -139,6 +160,7 @@ function App() {
         <Admin
             giveaways={giveaways}
             tickets={tickets}
+            participants={participants}
             createGiveawayCallback={createGiveaway}
             deleteGiveawayCallback={deleteGiveaway}
             updateGiveawayCallback={updateGiveaway}
