@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import './Giveaways.css';
 
 const Giveaways = ({giveaways, is_admin, deleteGiveawayCallback, updateGiveawayCallback}) => {
 
@@ -41,9 +42,9 @@ const Giveaways = ({giveaways, is_admin, deleteGiveawayCallback, updateGiveawayC
       <button type="button" onClick={() => deleteGiveawayCallback(giveaway.id)}>delete</button> 
       : '';
 
-    return (<div key={giveaway.id}>
-        <h4> {giveaway.name} </h4>
-        <p> {giveaway.start_date} - {giveaway.end_date} </p>
+    return (<div className='giveaway-container' key={giveaway.id}>
+        <h4 className="giveaway-title"> {giveaway.name} </h4>
+        <p className="giveaway-dates"> {giveaway.start_date} - {giveaway.end_date} </p>
         {editButton}
         {deleteButton}
       </div>
