@@ -1,10 +1,25 @@
 import { NavLink } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 import "./Footer.css";
 
-const Footer = () => {
+const Footer = ({admin_page_active}) => {
+  const {loginWithRedirect, isAuthenticated} = useAuth0();
+  
+  const admin_button_class = admin_page_active ? 'active' : '';
+
+  const loginRedirect = async () => {
+    await loginWithRedirect({
+      appState: {
+        returnTo: "/admin"
+      }
+    });
+  };
+
   return (
     <footer>
-      <NavLink to='/admin'>ADMIN</NavLink>
+      <a className={admin_button_class} onClick={loginRedirect}>
+          ADMIN
+      </a>
       <div className="copyright">&copy; Wet Jet Performance</div>
     </footer>
   );

@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import Giveaways from '../components/Giveaways';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
@@ -6,7 +7,7 @@ import Tickets from '../components/Tickets';
 import NewTicketForm from '../components/NewTicketForm';
 import './Admin.css'
 
-const Admin = ({giveaways, tickets, createGiveawayCallback, deleteGiveawayCallback, updateGiveawayCallback, createTicketCallback}) => {
+const Admin = ({giveaways, tickets, participants, createGiveawayCallback, deleteGiveawayCallback, updateGiveawayCallback, createTicketCallback}) => {
 
   const defaultGiveaway = {
     'name': '',
@@ -14,9 +15,32 @@ const Admin = ({giveaways, tickets, createGiveawayCallback, deleteGiveawayCallba
     'end_date': ''
   };
 
+  const {loginWithRedirect, isAuthenticated} = useAuth0();
   const [newGiveawayData, setNewGiveawayData] = useState(defaultGiveaway);
   const createGiveawayDialogRef = useRef(null);
   const addTicketsDialogRef = useRef(null);
+
+  console.log(isAuthenticated);
+
+  const loginRedirect = async () => {
+    await loginWithRedirect({
+      appState: {
+        returnTo: "/admin"
+      }
+    });
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div>
+        <NavBar />
+        <div id='unauthorized-notice'>
+          <p> Please login as an administrator to access this page. </p>
+          <button onClick={loginRedirect}> Login </button>
+        </div>
+        <Footer admin_page_active={true}/>
+      </div>
+  )}
 
   const updateForm = (event) => {
     setNewGiveawayData({
@@ -33,7 +57,7 @@ const Admin = ({giveaways, tickets, createGiveawayCallback, deleteGiveawayCallba
   return (
     <div>
       <NavBar />
-      <div className='admin-body'>
+      <main className='admin-body'>
         <h3>Manage Giveaways</h3>
         <section className='admin-giveaways'>
           <Giveaways giveaways={giveaways} is_admin={true} deleteGiveawayCallback={deleteGiveawayCallback} updateGiveawayCallback={updateGiveawayCallback} />
@@ -55,10 +79,10 @@ const Admin = ({giveaways, tickets, createGiveawayCallback, deleteGiveawayCallba
         <section className='admin-tickets'>
           <h3>Tickets</h3>
           <Tickets tickets={tickets}/>
-          <NewTicketForm />
+          <NewTicketForm giveaways={giveaways} participants={participants} createTicketCallback={createTicketCallback}/>
         </section>
-      </div>
-      <Footer />
+      </main>
+      <Footer admin_page_active={true}/>
     </div>
   );
 };

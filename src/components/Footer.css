@@ -26,7 +26,8 @@ footer a {
     font-family: Arial, Trebuchet MS, sans-serif;
     font-size: 12px;
     letter-spacing: 3px;
-    margin: 5px;
+    margin: auto;
+    margin-left: 5px;
     font-weight: bold;
     text-decoration: none;
     white-space: nowrap;
@@ -39,5 +40,7 @@ footer a {
 
 footer a:hover {
     color: rgba(241, 85, 85, 0.861);
+    cursor: pointer;
 }
+
 
