@@ -141,11 +141,50 @@ function App() {
       });
   }
 
-  const createTicket = (newTicket) => {
+  const createTicket = (giveaway_id, participant_id) => {
+    console.log('in create ticket', giveaway_id, participant_id);
     axios
-      .post(`${api}/tickets`, newTicket)
+      .post(`${api}/tickets`, {
+        giveaway_id: giveaway_id,
+        participant_id: participant_id
+      })
       .then((response) => {
         getTickets();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  const createParticipant = (name, phone_number, email) => {
+    console.log('in create participant', name, phone_number, email);
+    axios
+      .post(`${api}/participants`, {
+        name: name,
+        phone_number: phone_number,
+        email: email
+      })
+      .then((response) => {
+        getParticipants();
+        console.log(response)
+        return response.id
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  const createParticipantAndTicket = (name, phone_number, email, giveaway_id) => {
+    axios
+      .post(`${api}/participants`, {
+        name: name,
+        phone_number: phone_number,
+        email: email
+      })
+      .then((response) => {
+        console.log(response)
+        createTicket(giveaway_id, response.data.id);
+        getParticipants();
       })
       .catch((err) => {
         console.log(err);
@@ -158,13 +197,17 @@ function App() {
       <Route path="/giveaways" element={<CurrentGiveaways giveaways={giveaways} />} />
       <Route path="/admin" element={
         <Admin
-            giveaways={giveaways}
-            tickets={tickets}
-            participants={participants}
-            createGiveawayCallback={createGiveaway}
-            deleteGiveawayCallback={deleteGiveaway}
-            updateGiveawayCallback={updateGiveaway}
-            createTicketCallback={createTicket}/>} />
+          giveaways={giveaways}
+          tickets={tickets}
+          participants={participants}
+          createGiveawayCallback={createGiveaway}
+          deleteGiveawayCallback={deleteGiveaway}
+          updateGiveawayCallback={updateGiveaway}
+          createTicketCallback={createTicket}
+          createParticipantCallback={createParticipant}
+          createParticipantAndTicketCallback={createParticipantAndTicket}
+        />}
+      />
     </Routes>
   );
 }

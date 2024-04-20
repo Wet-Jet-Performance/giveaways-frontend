@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 
-const NewTicketForm = ({ giveaways, participants, createTicketCallback }) => {
+const NewTicketForm = ({ giveaways, participants, createTicketCallback, createParticipantCallback, createParticipantAndTicketCallback }) => {
   const defaultTicket = {
     giveaway_id: giveaways[0].id,
     participant_id: '',
@@ -11,6 +11,8 @@ const NewTicketForm = ({ giveaways, participants, createTicketCallback }) => {
   };
 
   const [ticketData, setTicketData] = useState(defaultTicket);
+  const [selectedParticipant, setSelectedParticipant] = useState(defaultTicket);
+  const [selectedGiveaway, setSelectedGiveaway] = useState(defaultTicket.giveaway_id)
   const addTicketsDialogRef = useRef(null);
 
   const updateForm = (event) => {
@@ -23,10 +25,8 @@ const NewTicketForm = ({ giveaways, participants, createTicketCallback }) => {
           phone_number: participants[event.target.value].phone_number,
           email: participants[event.target.value].email
         }
-        console.log(newTicket);
         setTicketData(newTicket);
       } catch {
-        console.log(ticketData);
         setTicketData(defaultTicket);
       }
     } else {
@@ -34,14 +34,19 @@ const NewTicketForm = ({ giveaways, participants, createTicketCallback }) => {
         ...ticketData,
         [event.target.name]: event.target.value
       };
-      console.log(newTicket);
       setTicketData(newTicket);
     }
   }
 
   const submitForm = (event) => {
-    createTicketCallback(ticketData);
+    if (!ticketData.participant_id) {
+      createParticipantAndTicketCallback(ticketData.name, ticketData.phone_number, ticketData.email, selectedGiveaway)
+    } else {
+      createTicketCallback(selectedGiveaway, ticketData.participant_id);
+    }
     setTicketData(defaultTicket);
+    setSelectedParticipant(defaultTicket);
+    setSelectedGiveaway(defaultTicket.giveaway_id);
   }
 
   const giveawaysDropDown = giveaways.map((giveaway) => {
@@ -56,17 +61,24 @@ const NewTicketForm = ({ giveaways, participants, createTicketCallback }) => {
     )
   })
 
+  const resetAndCloseForm = () => {
+    addTicketsDialogRef.current.close()
+    setTicketData(defaultTicket);
+    setSelectedParticipant(defaultTicket);
+    setSelectedGiveaway(defaultTicket.giveaway_id);
+  }
+
   return (
     <div>
       <dialog ref={addTicketsDialogRef}>
         <header>Add Tickets</header>
-        <form method='dialog'>
+        <form method='dialog' onSubmit={submitForm}>
           <label htmlFor='giveaway_id'> Select Giveaway </label>
-          <select name='giveaway_id' defaultValue={defaultTicket.giveaway_id}>
+          <select name='giveaway_id' value={selectedGiveaway} onChange={(e) => setSelectedGiveaway(e.target.value)}>
             {giveawaysDropDown}
           </select>
           <label htmlFor='participants'> Select Participant</label>
-          <select onChange={updateForm} name='participants' defaultValue={defaultTicket}>
+          <select onChange={updateForm} name='participants' value={selectedParticipant}>
             <option value={defaultTicket}> New Participant </option>
             {participantsDropDown}
           </select>
@@ -78,7 +90,7 @@ const NewTicketForm = ({ giveaways, participants, createTicketCallback }) => {
           <input type='email' name='email' value={ticketData.email} readOnly={ticketData.participant_id ? true : false} onChange={updateForm} />
           <label htmlFor='new_tickets'> Number of Tickets </label>
           <input type='number' min='1' name='new_tickets' value={ticketData.new_tickets} onChange={updateForm}/>
-          <button id='cancel-create-Ticket' type='button' onClick={() => addTicketsDialogRef.current.close()}>cancel</button>
+          <button id='cancel-create-Ticket' type='button' onClick={resetAndCloseForm}>cancel</button>
           <button type='submit'>submit</button>
         </form>
       </dialog>

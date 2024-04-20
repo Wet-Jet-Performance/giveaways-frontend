@@ -7,7 +7,7 @@ import Tickets from '../components/Tickets';
 import NewTicketForm from '../components/NewTicketForm';
 import './Admin.css'
 
-const Admin = ({giveaways, tickets, participants, createGiveawayCallback, deleteGiveawayCallback, updateGiveawayCallback, createTicketCallback}) => {
+const Admin = ({giveaways, tickets, participants, createGiveawayCallback, deleteGiveawayCallback, updateGiveawayCallback, createTicketCallback, createParticipantCallback, createParticipantAndTicketCallback}) => {
 
   const defaultGiveaway = {
     'name': '',
@@ -79,7 +79,13 @@ const Admin = ({giveaways, tickets, participants, createGiveawayCallback, delete
         <section className='admin-tickets'>
           <h3>Tickets</h3>
           <Tickets tickets={tickets}/>
-          <NewTicketForm giveaways={giveaways} participants={participants} createTicketCallback={createTicketCallback}/>
+          <NewTicketForm 
+            giveaways={giveaways}
+            participants={participants}
+            createTicketCallback={createTicketCallback}
+            createParticipantCallback={createParticipantCallback}
+            createParticipantAndTicketCallback={createParticipantAndTicketCallback}
+          />
         </section>
       </main>
       <Footer admin_page_active={true}/>
