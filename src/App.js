@@ -142,7 +142,6 @@ function App() {
   }
 
   const createTicket = (giveaway_id, participant_id) => {
-    console.log('in create ticket', giveaway_id, participant_id);
     axios
       .post(`${api}/tickets`, {
         giveaway_id: giveaway_id,
@@ -157,7 +156,6 @@ function App() {
   }
 
   const createParticipant = (name, phone_number, email) => {
-    console.log('in create participant', name, phone_number, email);
     axios
       .post(`${api}/participants`, {
         name: name,
@@ -166,8 +164,7 @@ function App() {
       })
       .then((response) => {
         getParticipants();
-        console.log(response)
-        return response.id
+        return response.data.id
       })
       .catch((err) => {
         console.log(err);
@@ -182,7 +179,6 @@ function App() {
         email: email
       })
       .then((response) => {
-        console.log(response)
         createTicket(giveaway_id, response.data.id);
         getParticipants();
       })
