@@ -1,0 +1,10 @@
+#ticket-list {
+    margin: 5px auto;
+}
+
+.ticket {
+    background-color: rgba(105, 157, 235, 0.391);
+    padding: 5px;
+    margin-bottom: 2vh;
+    border-radius: 2px;
+}

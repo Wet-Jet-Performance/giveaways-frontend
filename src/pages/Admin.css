@@ -1,3 +1,7 @@
+#admin-container {
+  overflow: hidden;
+}
+
 #unauthorized-notice {
   display: flex;
   margin: 100px 3vw 3vh 3vw;
@@ -6,18 +10,54 @@
   align-items: center;
 }
 
-.admin-body {
-  margin: 100px 3vw 3vh 3vw;
+.management-header {
+  margin: 0 4vw 0 2vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .admin-body {
+  margin: 100px 0;
   display: grid;
-  grid-template-columns: 30vw 70vw;
+  grid-template-columns: 70vw 30vw;
+  overflow: scroll;
 }
 
 .admin-giveaways {
+  margin: 0 2vw;
   grid-column: 1 / 2;
 }
 
 .admin-tickets {
+  margin: 0 2vw;
   grid-column: 2 / 3;
+  overflow: scroll;
+} */
+.admin-headers {
+  margin: 100px 0 0 0;
+  display: grid;
+  grid-template-columns: 68vw 32vw;
+}
+
+.admin-body {
+  display: flex;
+  height: 75vh;
+  margin-bottom: 100px;
+
+}
+
+.admin-giveaways {
+  margin: 0 2vw;
+  width: 70%;
+  overflow: scroll;
+  padding-bottom: 100px;
+}
+
+.admin-tickets {
+  margin: 0 2vw;
+  width: 30%;
+  overflow: scroll;
+  padding-bottom: 100px;
 }
 
 button {
@@ -28,6 +68,12 @@ button {
   border-radius: 3px;
   cursor: pointer;
   padding: 3px;
+}
+
+.plus-button {
+  font-size: 30px;
+  width: 40px;
+  align-self: center;
 }
 
 button:hover {

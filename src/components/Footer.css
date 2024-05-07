@@ -13,6 +13,7 @@ footer {
     flex-direction: row;
     justify-content: flex-start;
     color: rgb(239, 252, 218);
+    font-size: 12px;
 }
 
 .copyright {
@@ -22,12 +23,11 @@ footer {
     padding: 3px 10px;
 }
 
-footer a {
+footer button {
     font-family: Arial, Trebuchet MS, sans-serif;
     font-size: 12px;
     letter-spacing: 3px;
-    margin: auto;
-    margin-left: 5px;
+    margin: auto auto auto 5px ;
     font-weight: bold;
     text-decoration: none;
     white-space: nowrap;
@@ -38,7 +38,7 @@ footer a {
     transition: background-color 0.7s, box-shadow 0.7s, margin-left 0.7s, margin-right 0.7s, transform 0.7s;
 }
 
-footer a:hover {
+footer button:hover {
     color: rgba(241, 85, 85, 0.861);
     cursor: pointer;
 }

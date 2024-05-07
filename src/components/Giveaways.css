@@ -1,8 +1,13 @@
 .giveaway-container {
-    background-color: rgba(105, 157, 235, 0.391);
+    border: 2px solid rgba(105, 157, 235, 0.391);
     border-radius: 2px;
+    margin: 5px auto;
 }
 
 .giveaway-title {
     color: rgb(105, 157, 235);
+}
+
+.giveaway-container:hover {
+    border: 2px solid red;
 }
