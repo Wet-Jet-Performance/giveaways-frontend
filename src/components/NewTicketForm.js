@@ -1,19 +1,18 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
-const NewTicketForm = ({ giveaways, participants, createTicketCallback, createParticipantCallback, createParticipantAndTicketCallback }) => {
+const NewTicketForm = ({ addTicketsDialogRef, giveaways, participants, createTicketCallback, createParticipantAndTicketCallback }) => {
   const defaultTicket = {
     giveaway_id: giveaways[0].id,
     participant_id: '',
     name: '',
     phone_number: '',
     email: '',
-    new_tickets: 1
+    number_of_tickets: 1
   };
 
   const [ticketData, setTicketData] = useState(defaultTicket);
   const [selectedParticipant, setSelectedParticipant] = useState(defaultTicket);
   const [selectedGiveaway, setSelectedGiveaway] = useState(defaultTicket.giveaway_id)
-  const addTicketsDialogRef = useRef(null);
 
   const updateForm = (event) => {
     if (event.target.name === 'participants') {
@@ -40,9 +39,9 @@ const NewTicketForm = ({ giveaways, participants, createTicketCallback, createPa
 
   const submitForm = (event) => {
     if (!ticketData.participant_id) {
-      createParticipantAndTicketCallback(ticketData.name, ticketData.phone_number, ticketData.email, selectedGiveaway)
+      createParticipantAndTicketCallback(ticketData.name, ticketData.phone_number, ticketData.email, selectedGiveaway, ticketData.number_of_tickets)
     } else {
-      createTicketCallback(selectedGiveaway, ticketData.participant_id);
+      createTicketCallback(selectedGiveaway, ticketData.participant_id, ticketData.number_of_tickets);
     }
     setTicketData(defaultTicket);
     setSelectedParticipant(defaultTicket);
@@ -88,13 +87,12 @@ const NewTicketForm = ({ giveaways, participants, createTicketCallback, createPa
           <input type='tel' name='phone_number' value={ticketData.phone_number} readOnly={ticketData.participant_id ? true : false} onChange={updateForm}/>
           <label htmlFor='email'> Email </label>
           <input type='email' name='email' value={ticketData.email} readOnly={ticketData.participant_id ? true : false} onChange={updateForm} />
-          <label htmlFor='new_tickets'> Number of Tickets </label>
-          <input type='number' min='1' name='new_tickets' value={ticketData.new_tickets} onChange={updateForm}/>
+          <label htmlFor='number_of_tickets'> Number of Tickets </label>
+          <input type='number' min='1' name='number_of_tickets' value={ticketData.number_of_tickets} onChange={updateForm}/>
           <button id='cancel-create-Ticket' type='button' onClick={resetAndCloseForm}>cancel</button>
           <button type='submit'>submit</button>
         </form>
       </dialog>
-      <button id='add-tickets-button' type='button' onClick={() => addTicketsDialogRef.current.showModal()}>Add Tickets</button>
     </div>
   );
 };

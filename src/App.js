@@ -135,20 +135,34 @@ function App() {
       .then((response) => {
         const updatedGiveaways = giveaways.filter((giveaway) => giveaway.id !== giveawayId);
         setGiveaways(updatedGiveaways);
+        getTickets();
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  const createTicket = (giveaway_id, participant_id) => {
+  const createTicket = (giveaway_id, participant_id, num_tickets) => {
     axios
       .post(`${api}/tickets`, {
         giveaway_id: giveaway_id,
-        participant_id: participant_id
+        participant_id: participant_id,
+        number_of_tickets: num_tickets
       })
       .then((response) => {
         getTickets();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  const deleteTicket = (ticketId) => {
+    axios
+      .delete(`${api}/tickets/${ticketId}`)
+      .then((response) => {
+        const updatedTickets = tickets.filter((ticket) => ticket.id !== ticketId);
+        setTickets(updatedTickets);
       })
       .catch((err) => {
         console.log(err);
@@ -171,7 +185,7 @@ function App() {
       });
   }
 
-  const createParticipantAndTicket = (name, phone_number, email, giveaway_id) => {
+  const createParticipantAndTicket = (name, phone_number, email, giveaway_id, num_tickets) => {
     axios
       .post(`${api}/participants`, {
         name: name,
@@ -179,7 +193,7 @@ function App() {
         email: email
       })
       .then((response) => {
-        createTicket(giveaway_id, response.data.id);
+        createTicket(giveaway_id, response.data.id, num_tickets);
         getParticipants();
       })
       .catch((err) => {
@@ -200,6 +214,7 @@ function App() {
           deleteGiveawayCallback={deleteGiveaway}
           updateGiveawayCallback={updateGiveaway}
           createTicketCallback={createTicket}
+          deleteTicketCallback={deleteTicket}
           createParticipantCallback={createParticipant}
           createParticipantAndTicketCallback={createParticipantAndTicket}
         />}
