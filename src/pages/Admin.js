@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import Giveaways from '../components/Giveaways';
 import NavBar from '../components/NavBar';
@@ -6,21 +6,14 @@ import Footer from '../components/Footer';
 import Tickets from '../components/Tickets';
 import NewTicketForm from '../components/NewTicketForm';
 import './Admin.css'
+import NewGiveawayForm from '../components/NewGiveawayForm';
 
-const Admin = ({giveaways, tickets, participants, createGiveawayCallback, deleteGiveawayCallback, updateGiveawayCallback, createTicketCallback, createParticipantCallback, createParticipantAndTicketCallback}) => {
-
-  const defaultGiveaway = {
-    'name': '',
-    'start_date': '',
-    'end_date': ''
-  };
+const Admin = ({giveaways, tickets, participants, createGiveawayCallback, deleteGiveawayCallback, updateGiveawayCallback, createTicketCallback, deleteTicketCallback, createParticipantAndTicketCallback}) => {
 
   const {loginWithRedirect, isAuthenticated} = useAuth0();
-  const [newGiveawayData, setNewGiveawayData] = useState(defaultGiveaway);
+
   const createGiveawayDialogRef = useRef(null);
   const addTicketsDialogRef = useRef(null);
-
-  console.log(isAuthenticated);
 
   const loginRedirect = async () => {
     await loginWithRedirect({
@@ -42,48 +35,42 @@ const Admin = ({giveaways, tickets, participants, createGiveawayCallback, delete
       </div>
   )}
 
-  const updateForm = (event) => {
-    setNewGiveawayData({
-      ...newGiveawayData,
-      [event.target.name]: event.target.value
-    })
-  }
-
-  const submitForm = (event) => {
-    createGiveawayCallback(newGiveawayData);
-    setNewGiveawayData(defaultGiveaway);
-  }
-
   return (
-    <div>
+    <div class='admin-container'>
       <NavBar />
+      <div className='admin-headers'>
+        <header className='management-header'>
+          <h1 id='manage-giveaways-title'>Manage Giveaways</h1>
+          <button className='plus-button' type='button' onClick={() => createGiveawayDialogRef.current.showModal()}>+</button>
+        </header>
+        <header className='management-header'>
+          <h1 id='manage-tickets-title'>Tickets</h1>
+          <button className='plus-button' type='button' onClick={() => addTicketsDialogRef.current.showModal()}>+</button>
+        </header>
+      </div>
       <main className='admin-body'>
-        <h3>Manage Giveaways</h3>
         <section className='admin-giveaways'>
-          <Giveaways giveaways={giveaways} is_admin={true} deleteGiveawayCallback={deleteGiveawayCallback} updateGiveawayCallback={updateGiveawayCallback} />
-          <dialog ref={createGiveawayDialogRef}>
-            <header>Create Giveaway</header>
-            <form method='dialog' onSubmit={submitForm}>
-              <label htmlFor='name'> Name </label>
-              <input name='name' value={newGiveawayData.name} onChange={updateForm} />
-              <label htmlFor='start_date'> Start Date </label>
-              <input type='date' name='start_date' value={newGiveawayData.start_date} onChange={updateForm} />
-              <label htmlFor='end_date'> End Date </label>
-              <input type='date' name='end_date' value={newGiveawayData.end_date} onChange={updateForm} />
-              <button id='cancel-create-giveaway' type='button' onClick={() => createGiveawayDialogRef.current.close()}>cancel</button>
-              <button type='submit'>submit</button>
-            </form>
-          </dialog>
-          <button id='create-giveaway-button' onClick={() => createGiveawayDialogRef.current.showModal()}> Create Giveaway </button>
+          <Giveaways 
+            giveaways={giveaways}
+            is_admin={true}
+            deleteGiveawayCallback={deleteGiveawayCallback}
+            updateGiveawayCallback={updateGiveawayCallback}
+          />
+          <NewGiveawayForm
+            createGiveawayDialogRef={createGiveawayDialogRef}
+            createGiveawayCallback={createGiveawayCallback} 
+          />
         </section>
         <section className='admin-tickets'>
-          <h3>Tickets</h3>
-          <Tickets tickets={tickets}/>
+          <Tickets
+            tickets={tickets}
+            deleteTicketCallback={deleteTicketCallback}
+          />
           <NewTicketForm 
+            addTicketsDialogRef={addTicketsDialogRef}
             giveaways={giveaways}
             participants={participants}
             createTicketCallback={createTicketCallback}
-            createParticipantCallback={createParticipantCallback}
             createParticipantAndTicketCallback={createParticipantAndTicketCallback}
           />
         </section>
