@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import './Tickets.css';
 import AreYouSure from './AreYouSure';
+import trashCanIcon from '../assets/trash-can-white.png'
 
 const Tickets = ({ tickets, deleteTicketCallback, selectedGiveaway }) => {
 
@@ -16,7 +17,6 @@ const Tickets = ({ tickets, deleteTicketCallback, selectedGiveaway }) => {
     if (confirmed) { 
       deleteTicketCallback(selectedTicket.id);
     } else {
-      console.log(event.target);
       setSelectedTicket({
         id: ticketId,
         name: ticketName
@@ -40,7 +40,7 @@ const Tickets = ({ tickets, deleteTicketCallback, selectedGiveaway }) => {
             <p> {ticket.participant_phone} </p>
             <p> {ticket.participant_email} </p>
           </div>
-          <button className='delete-ticket-btn' type='button' onClick={(e) => deleteTicket(e, false, ticket.id, ticket.participant_name)}>Delete</button>
+          <button className='delete-ticket-btn' type='button' onClick={(e) => deleteTicket(e, false, ticket.id, ticket.participant_name)}><img src={trashCanIcon} alt='delete' /></button>
         </div>
       </div>
       )

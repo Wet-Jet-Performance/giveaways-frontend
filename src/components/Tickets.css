@@ -37,9 +37,20 @@
 }
 
 .delete-ticket-btn {
-    height: fit-content;
+    height: 30px;
     padding: 5px;
     align-self: flex-end;
+    background-color: transparent;
+    transition: all 0.3s;
+}
+
+.delete-ticket-btn img {
+    height: 100%;
+}
+
+.delete-ticket-btn:hover {
+    height: 35px;
+    transition: all 0.3s;
 }
 
 .ticket:hover {
