@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const NewTicketForm = ({ addTicketsDialogRef, giveaways, participants, createTicketCallback, createParticipantAndTicketCallback }) => {
   const defaultTicket = {
-    giveaway_id: giveaways[0].id,
+    giveaway_id: giveaways.length > 0 ? giveaways[0].id : 0,
     participant_id: '',
     name: '',
     phone_number: '',
