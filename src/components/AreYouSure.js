@@ -1,11 +1,15 @@
 import { useRef } from "react";
 
-const AreYouSure = ({areYouSureDialogRef, itemType, itemId, itemName, deleteItemCallback}) => {
+const AreYouSure = ({areYouSureDialogRef, itemType, itemId, itemName, deleteItemCallback, callbackArgs}) => {
 
   
   const submitForm = (event) => {
     areYouSureDialogRef.current.close();
-    deleteItemCallback({}, true)
+    if (callbackArgs) {
+      deleteItemCallback(event, true, ...callbackArgs)
+    } else {
+      deleteItemCallback(event, true)
+    }
   }
 
   return (

@@ -48,12 +48,12 @@
     justify-content: start;
 }
 
-.giveaway-container button {
+.giveaway-container .management-button {
     padding: 10px;
     z-index: 10;
 }
 
-.giveaway-container button:hover {
+.giveaway-container .management-button:hover {
     background-color: red;
 }
 
@@ -83,5 +83,19 @@
 }
 
 .delete-giveaway-winner-btn {
-    margin-left: 5px;
+    height: 25px;
+    background-color: transparent;
+    padding: 5px;
+    margin-left: 10px;
+    align-self: end;
+    transition: all 0.3s;
+}
+
+.delete-giveaway-winner-btn img {
+    height: 100%;
+}
+
+.delete-giveaway-winner-btn:hover {
+    height: 27px;
+    transition: all 0.3s;
 }

@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import './Giveaways.css';
 import AreYouSure from './AreYouSure';
+import trashCanIcon from '../assets/trash-can-white.png';
 
 const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCallback, updateGiveawayCallback, selectedGiveaway, setSelectedGiveawayCallback, createWinnerCallback, deleteWinnerCallback }) => {
   const giveawayAreYouSureDialogRef = useRef(null);
@@ -12,7 +13,15 @@ const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCal
     'end_date': ''
   };
 
+  const defaultAreYouSureData = {
+    'itemType': '',
+    'itemId': 0,
+    'itemName': '',
+    'deleteCallback': ''
+  }
+
   const [updatedGiveawayData, setUpdatedGiveawayData] = useState(defaultGiveaway);
+  const [areYouSureData, setAreYouSureData] = useState(defaultAreYouSureData);
 
   const editGiveaway = (e, giveaway) => {
     e.stopPropagation();
@@ -31,11 +40,17 @@ const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCal
     
   }
 
-  const deleteGiveaway = (event=null, confirmed=false) => {
+  const deleteGiveaway = (event, confirmed=false) => {
     if (confirmed) { 
       dialogFormRef.current.close()
       deleteGiveawayCallback(updatedGiveawayData.id)
     } else {
+      setAreYouSureData({
+        'itemType': 'Giveaway',
+        'itemId': updatedGiveawayData.id,
+        'itemName': updatedGiveawayData.name,
+        'deleteCallback': deleteGiveaway
+      })
       giveawayAreYouSureDialogRef.current.showModal();
     }
   }
@@ -60,24 +75,36 @@ const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCal
       const randomIndex = Math.floor(Math.random() * selectedGiveawayTickets.length);
       const winningTicket = selectedGiveawayTickets[randomIndex];
       createWinnerCallback(winningTicket.id, winningTicket.participant_id, winningTicket.giveaway_id, winningTicket.participant_name, winningTicket.participant_phone, winningTicket.participant_email);
-      console.log(winningTicket);
     } catch {
       console.log('error: no tickets');
     }
   }
 
-  const deleteWinner = (e, winnerId, giveawayId) => {
+  const deleteWinner = (e, confirmed, winnerId, giveawayId, winnerName) => {
     e.stopPropagation();
-    deleteWinnerCallback(winnerId, giveawayId);
+    if (confirmed) {
+      console.log('are you sure state', areYouSureData);
+      deleteWinnerCallback(winnerId, giveawayId);
+    } else {
+      setAreYouSureData({
+        'itemType': 'Winner',
+        'itemId': winnerId,
+        'itemName': winnerName,
+        'deleteCallback': deleteWinner,
+        'callbackArgs': [winnerId, giveawayId, winnerName]
+      })
+      giveawayAreYouSureDialogRef.current.showModal();
+    }
+    
   }
 
   const giveawaysList = giveaways.map((giveaway) => {
     const editButton = is_admin ? 
-      <button type="button" className='edit-giveaway-btn' onClick={(e) => editGiveaway(e, giveaway)}>Edit</button> 
+      <button type="button" className='edit-giveaway-btn management-button' onClick={(e) => editGiveaway(e, giveaway)}>Edit</button> 
       : '';
     
     const drawWinnerButton = is_admin ? 
-      <button type="button" onClick={(e) => drawWinner(e, giveaway.name)}>Draw Winner</button> 
+      <button className='management-button' type="button" onClick={(e) => drawWinner(e, giveaway.name)}>Draw Winner</button> 
       : '';
     const winners = giveaway.winners.map((winner) => {
       return (
@@ -85,7 +112,7 @@ const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCal
           <p>Winning Ticket: #{winner.winning_ticket_id}</p>
           <div className='giveaway-winner-body'>
             <p>{winnersList[winner.id]['participant_name']}</p>
-            <button className='delete-giveaway-winner-btn' type='button' onClick={(e) => deleteWinner(e, winner.id, giveaway.id)}>Delete</button>
+            <button className='delete-giveaway-winner-btn' type='button' onClick={(e) => deleteWinner(e, false, winner.id, giveaway.id, winnersList[winner.id]['participant_name'])}><img src={trashCanIcon} alt='delete' /></button>
           </div>
         </div>
       )
@@ -127,10 +154,11 @@ const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCal
       </dialog>
       <AreYouSure
         areYouSureDialogRef={giveawayAreYouSureDialogRef}
-        itemType={'Giveaway'}
-        itemId={updatedGiveawayData.id}
-        itemName={updatedGiveawayData.name}
-        deleteItemCallback={deleteGiveaway}
+        itemType={areYouSureData.itemType}
+        itemId={areYouSureData.itemId}
+        itemName={areYouSureData.itemName}
+        deleteItemCallback={areYouSureData.deleteCallback}
+        callbackArgs={areYouSureData.callbackArgs}
       />
     </div>
     
