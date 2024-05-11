@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import './NavBar.css';
 import { useState } from 'react';
+import WJPLogo from '../assets/wjp.png'
 
 const NavBar = () => {
   const [showLinks, setShowLinks] = useState(false);
@@ -17,7 +18,10 @@ const NavBar = () => {
         <NavLink to='/'>HOME</NavLink>
         <NavLink to='/giveaways'>GIVEAWAYS</NavLink>
       </div>
-      <p id='site-title'> Wet Jet Performance </p>
+      <div className='nav-title'>
+        <img className='wjp-logo' src={WJPLogo} alt='wet jet performance logo' />
+        <p id='giveaway-title'> GIVEAWAYS </p>
+      </div>
     </nav>
   );
 };

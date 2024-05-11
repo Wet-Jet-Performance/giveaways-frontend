@@ -2,7 +2,7 @@
     nav {
         display: flex;
         flex-direction: row;
-        justify-content: flex-start;
+        justify-content: space-between;
         padding:10px 2vw;
         width: 100%;
         position: fixed;
@@ -12,6 +12,10 @@
         top: 0px;
         background-color: rgb(26, 26, 26);
         z-index: 10;
+    }
+
+    #hamburger-icon {
+        display: none;
     }
 
     .nav-links {
@@ -29,6 +33,7 @@
         text-decoration: none;
         white-space: nowrap;
         color: white;
+        margin: auto;
         padding: 15px;
         border-radius: 1px;
         /* background-color: rgb(72, 71, 71); */
@@ -39,21 +44,31 @@
         color: rgba(241, 85, 85, 0.861);
     }
 
-    .active {
+    nav .active {
         font-weight: bold;
-        color: rgba(255, 18, 18, 0.861);
+        color: rgba(255, 18, 18, 0.947);
         pointer-events: none;
     }
 
-    #site-title {
+    .nav-title {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .wjp-logo {
+        height: 75px;
+    }
+
+    #giveaway-title {
         font-family: Arial, Trebuchet MS, sans-serif;
-        font-size: 24px;
+        font-size: 25px;
         letter-spacing: 3px;
         text-align: right;
         margin: auto;
         margin-right: 1vw;
         font-style: italic;
-        color: white;
+        color: rgb(249, 31, 31);
+        font-weight: bolder;
     }
 }
 
@@ -63,15 +78,14 @@
         grid-template-columns: 35px auto;
         grid-template-rows: 100% 0;
         margin-top: 10px;
-        padding:10px 5vw;
+        padding:10px 2vw;
         width: 100%;
         position: fixed;
         -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
         -moz-box-sizing: border-box;    /* Firefox, other Gecko */
         box-sizing: border-box; 
         top: 0px;
-        background-color: rgb(212, 228, 210);
-        box-shadow: 5px 5px rgba(107, 223, 89, 0.353);
+        background-color: rgb(26, 26, 26);
         z-index: 10;
         overflow: hidden;
         transition: grid-template-rows 0.7s;
