@@ -7,7 +7,9 @@ import CurrentGiveaways from './pages/CurrentGiveaways'
 import Admin from './pages/Admin'
 
 function App() {
-  const api = 'http://127.0.0.1:5000'
+  const api = process.env.REACT_APP_BACKEND_API;
+
+  console.log('api', api);
 
   const [giveaways, setGiveaways] = useState([]);
   const [tickets, setTickets] = useState({});
