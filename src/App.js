@@ -10,14 +10,15 @@ function App() {
   const api = 'http://127.0.0.1:5000'
 
   const [giveaways, setGiveaways] = useState([]);
-  const [tickets, setTickets] = useState([]);
+  const [tickets, setTickets] = useState({});
   const [participants, setParticipants] = useState([]);
+  const [winners, setWinners] = useState({});
 
   useEffect(() => {
     getGiveaways();
     getTickets();
     getParticipants();
-    
+    getWinners();
   }, []);
 
   const getGiveaways = () => {
@@ -29,7 +30,8 @@ function App() {
             id: giveaway.id,
             name: giveaway.name,
             start_date: giveaway.start_date,
-            end_date: giveaway.end_date
+            end_date: giveaway.end_date,
+            winners: giveaway.winners
           };
         });
         setGiveaways(newGiveaways);
@@ -43,18 +45,39 @@ function App() {
     axios
       .get(`${api}/tickets`)
       .then((response) => {
-        const newTickets = response.data.map((ticket) => {
-          return {
-            id: ticket.id,
-            giveaway_id: ticket.giveaway_id,
-            participant_id: ticket.participant_id,
-            giveaway_name: ticket.giveaway_name,
-            participant_name: ticket.participant_name,
-            participant_phone: ticket.participant_phone,
-            participant_email: ticket.participant_email
-            
-          };
-        });
+        let newTickets = {'all': []};
+        for (const ticket of response.data) {
+          newTickets.all.push({
+              id: ticket.id,
+              giveaway_id: ticket.giveaway_id,
+              participant_id: ticket.participant_id,
+              giveaway_name: ticket.giveaway_name,
+              participant_name: ticket.participant_name,
+              participant_phone: ticket.participant_phone,
+              participant_email: ticket.participant_email
+            })
+          try {
+            newTickets[ticket.giveaway_name].push({
+              id: ticket.id,
+              giveaway_id: ticket.giveaway_id,
+              participant_id: ticket.participant_id,
+              giveaway_name: ticket.giveaway_name,
+              participant_name: ticket.participant_name,
+              participant_phone: ticket.participant_phone,
+              participant_email: ticket.participant_email
+            })
+          } catch {
+            newTickets[ticket.giveaway_name] = [{
+              id: ticket.id,
+              giveaway_id: ticket.giveaway_id,
+              participant_id: ticket.participant_id,
+              giveaway_name: ticket.giveaway_name,
+              participant_name: ticket.participant_name,
+              participant_phone: ticket.participant_phone,
+              participant_email: ticket.participant_email
+            }]
+          }
+        };
         setTickets(newTickets);
       })
       .catch((err) => {
@@ -82,6 +105,29 @@ function App() {
       });
   }
 
+  const getWinners = () => {
+    axios
+      .get(`${api}/winners`)
+      .then((response) => {
+        let newWinners = {};
+        for (const winner of response.data) {
+          newWinners[winner.id] = {
+            giveaway_id: winner.giveaway_id,
+            participant_id: winner.participant_id,
+            winning_ticket_id: winner.winning_ticket_id,
+            giveaway_name: winner.giveaway_name,
+            participant_name: winner.participant_name,
+            participant_phone: winner.participant_phone,
+            participant_email: winner.participant_email
+          }
+        };
+        setWinners(newWinners);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   const createGiveaway = (newGiveaway) => {
     axios
       .post(`${api}/giveaways`, newGiveaway)
@@ -96,10 +142,17 @@ function App() {
             'id': response.data.id,
             'name': newGiveaway.name,
             'start_date': newGiveaway.start_date,
-            'end_date': newGiveaway.end_date
+            'end_date': newGiveaway.end_date,
+            'winners': []
           }
         ]
         setGiveaways(updatedGiveaways);
+        const updatedTickets = {
+          ...tickets,
+          [newGiveaway.name]: []
+        }
+        setTickets(updatedTickets);
+
       })
       .catch((err) => {
         console.log(err);
@@ -136,6 +189,7 @@ function App() {
         const updatedGiveaways = giveaways.filter((giveaway) => giveaway.id !== giveawayId);
         setGiveaways(updatedGiveaways);
         getTickets();
+        getWinners();
       })
       .catch((err) => {
         console.log(err);
@@ -161,8 +215,7 @@ function App() {
     axios
       .delete(`${api}/tickets/${ticketId}`)
       .then((response) => {
-        const updatedTickets = tickets.filter((ticket) => ticket.id !== ticketId);
-        setTickets(updatedTickets);
+        getTickets();
       })
       .catch((err) => {
         console.log(err);
@@ -199,17 +252,67 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const createWinner = (winningTicketId, participantId, giveawayId, name, phone_number, email) => {
+    axios
+      .post(`${api}/winners`, {
+        winning_ticket_id: winningTicketId,
+        giveaway_id: giveawayId,
+        participant_id: participantId
+      })
+      .then((response) => {
+        getGiveaways();
+        const newWinners = {
+          ...winners,
+          [response.data.id]: {
+            giveaway_id: giveawayId,
+            participant_id: participantId,
+            winning_ticket_id: winningTicketId,
+            participant_name: name,
+            participant_phone: phone_number,
+            participant_email: email
+          }
+        }
+        setWinners(newWinners);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  const deleteWinner = (winnerId, giveawayId) => {
+    axios
+      .delete(`${api}/winners/${winnerId}`)
+      .then((response) => {
+        const newWinners = {...winners};
+        delete newWinners[winnerId];
+        setWinners(newWinners);
+        const newGiveaways = giveaways.map((giveaway) => {
+          if (giveaway.id === giveawayId) {
+            giveaway.winners = giveaway.winners.filter((winner) => {
+              return winner.id !== winnerId
+            })
+          }
+          return giveaway
+        })
+        setGiveaways(newGiveaways);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/giveaways" element={<CurrentGiveaways giveaways={giveaways} />} />
+      <Route path="/giveaways" element={<CurrentGiveaways giveaways={giveaways} winnersList={winners} />} />
       <Route path="/admin" element={
         <Admin
           giveaways={giveaways}
           tickets={tickets}
           participants={participants}
+          winners={winners}
           createGiveawayCallback={createGiveaway}
           deleteGiveawayCallback={deleteGiveaway}
           updateGiveawayCallback={updateGiveaway}
@@ -217,6 +320,8 @@ function App() {
           deleteTicketCallback={deleteTicket}
           createParticipantCallback={createParticipant}
           createParticipantAndTicketCallback={createParticipantAndTicket}
+          createWinnerCallback={createWinner}
+          deleteWinnerCallback={deleteWinner}
         />}
       />
     </Routes>

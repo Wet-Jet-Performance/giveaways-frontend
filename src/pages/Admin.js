@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import Giveaways from '../components/Giveaways';
 import NavBar from '../components/NavBar';
@@ -8,8 +8,9 @@ import NewTicketForm from '../components/NewTicketForm';
 import './Admin.css'
 import NewGiveawayForm from '../components/NewGiveawayForm';
 
-const Admin = ({giveaways, tickets, participants, createGiveawayCallback, deleteGiveawayCallback, updateGiveawayCallback, createTicketCallback, deleteTicketCallback, createParticipantAndTicketCallback}) => {
+const Admin = ({ giveaways, tickets, participants, winners,  createGiveawayCallback, deleteGiveawayCallback, updateGiveawayCallback, createTicketCallback, deleteTicketCallback, createParticipantAndTicketCallback, createWinnerCallback, deleteWinnerCallback }) => {
 
+  const [selectedGiveaway, setSelectedGiveaway] = useState('all')
   const {loginWithRedirect, isAuthenticated} = useAuth0();
 
   const createGiveawayDialogRef = useRef(null);
@@ -36,7 +37,7 @@ const Admin = ({giveaways, tickets, participants, createGiveawayCallback, delete
   )}
 
   return (
-    <div class='admin-container'>
+    <div className='admin-container'>
       <NavBar />
       <div className='admin-headers'>
         <header className='management-header'>
@@ -52,9 +53,15 @@ const Admin = ({giveaways, tickets, participants, createGiveawayCallback, delete
         <section className='admin-giveaways'>
           <Giveaways 
             giveaways={giveaways}
+            tickets={tickets}
+            winnersList={winners}
             is_admin={true}
             deleteGiveawayCallback={deleteGiveawayCallback}
             updateGiveawayCallback={updateGiveawayCallback}
+            selectedGiveaway={selectedGiveaway}
+            setSelectedGiveawayCallback={setSelectedGiveaway}
+            createWinnerCallback={createWinnerCallback}
+            deleteWinnerCallback={deleteWinnerCallback}
           />
           <NewGiveawayForm
             createGiveawayDialogRef={createGiveawayDialogRef}
@@ -65,6 +72,7 @@ const Admin = ({giveaways, tickets, participants, createGiveawayCallback, delete
           <Tickets
             tickets={tickets}
             deleteTicketCallback={deleteTicketCallback}
+            selectedGiveaway={selectedGiveaway}
           />
           <NewTicketForm 
             addTicketsDialogRef={addTicketsDialogRef}
