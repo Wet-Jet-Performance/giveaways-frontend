@@ -43,4 +43,10 @@ footer button:hover {
     cursor: pointer;
 }
 
+footer .active {
+    font-weight: bold;
+    color: rgba(255, 18, 18, 0.861);
+    pointer-events: none;
+}
+
 

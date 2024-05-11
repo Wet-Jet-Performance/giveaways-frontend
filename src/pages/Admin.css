@@ -11,7 +11,7 @@
 }
 
 .management-header {
-  margin: 0 4vw 0 2vw;
+  margin: 0;
   display: flex;
   justify-content: space-between;
 }
@@ -34,9 +34,11 @@
   overflow: scroll;
 } */
 .admin-headers {
-  margin: 100px 0 0 0;
+  margin: 100px 0 0 2vw;
   display: grid;
-  grid-template-columns: 68vw 32vw;
+  grid-template-columns: 68vw 30vw;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  letter-spacing: 5px;
 }
 
 .admin-body {
@@ -71,20 +73,22 @@ button {
 }
 
 .plus-button {
-  font-size: 30px;
+  font-size: 40px;
   width: 40px;
-  align-self: center;
+  background-color: transparent;
+  margin-right: 3vw;
 }
 
-button:hover {
-  background-color: rgb(248, 92, 92);
+.plus-button:hover {
+  color: red;
 }
 
 dialog {
-  height: 50vh;
+  /* height: 50vh; */
   width: 50vw;
+  min-width: 500px;
   border: none;
-  border-radius: 2px;
+  border-radius: 3px;
   background-color: rgb(45, 45, 45);
   color: white;
 }
@@ -101,6 +105,13 @@ form {
 }
 
 input {
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: rgb(183, 221, 236);
+}
+
+select {
   border: none;
   border-radius: 5px;
   padding: 5px;

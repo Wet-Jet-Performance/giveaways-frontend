@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './NewGiveawayForm.css';
 
 const NewGiveawayForm = ({ createGiveawayDialogRef, createGiveawayCallback}) => {
 
@@ -25,16 +26,16 @@ const NewGiveawayForm = ({ createGiveawayDialogRef, createGiveawayCallback}) => 
 
   return (
     <dialog ref={createGiveawayDialogRef}>
+      <button className='close-dialog' type='button' onClick={() => createGiveawayDialogRef.current.close()}>x</button>
       <header>Create Giveaway</header>
       <form method='dialog' onSubmit={submitForm}>
         <label htmlFor='name'> Name </label>
-        <input name='name' value={newGiveawayData.name} onChange={updateForm} />
+        <input name='name' value={newGiveawayData.name} onChange={updateForm} required/>
         <label htmlFor='start_date'> Start Date </label>
-        <input type='date' name='start_date' value={newGiveawayData.start_date} onChange={updateForm} />
+        <input type='date' name='start_date' value={newGiveawayData.start_date} onChange={updateForm} required/>
         <label htmlFor='end_date'> End Date </label>
-        <input type='date' name='end_date' value={newGiveawayData.end_date} onChange={updateForm} />
-        <button id='cancel-create-giveaway' type='button' onClick={() => createGiveawayDialogRef.current.close()}>cancel</button>
-        <button type='submit'>submit</button>
+        <input type='date' name='end_date' value={newGiveawayData.end_date} onChange={updateForm} required/>
+        <button className='dialog-button' type='submit'>Submit</button>
       </form>
     </dialog>
 

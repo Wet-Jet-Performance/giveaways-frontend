@@ -70,6 +70,7 @@ const NewTicketForm = ({ addTicketsDialogRef, giveaways, participants, createTic
   return (
     <div>
       <dialog ref={addTicketsDialogRef}>
+        <button className='close-dialog' type='button' onClick={resetAndCloseForm}>x</button>
         <header>Add Tickets</header>
         <form method='dialog' onSubmit={submitForm}>
           <label htmlFor='giveaway_id'> Select Giveaway </label>
@@ -82,15 +83,14 @@ const NewTicketForm = ({ addTicketsDialogRef, giveaways, participants, createTic
             {participantsDropDown}
           </select>
           <label htmlFor='name'> Name </label>
-          <input name='name' value={ticketData.name} readOnly={ticketData.participant_id ? true : false} onChange={updateForm}/>
+          <input name='name' value={ticketData.name} readOnly={ticketData.participant_id ? true : false} onChange={updateForm} required/>
           <label htmlFor='phone_number'> Phone Number </label>
-          <input type='tel' name='phone_number' value={ticketData.phone_number} readOnly={ticketData.participant_id ? true : false} onChange={updateForm}/>
+          <input type='tel' name='phone_number' value={ticketData.phone_number} readOnly={ticketData.participant_id ? true : false} onChange={updateForm} required/>
           <label htmlFor='email'> Email </label>
-          <input type='email' name='email' value={ticketData.email} readOnly={ticketData.participant_id ? true : false} onChange={updateForm} />
+          <input type='email' name='email' value={ticketData.email} readOnly={ticketData.participant_id ? true : false} onChange={updateForm} required/>
           <label htmlFor='number_of_tickets'> Number of Tickets </label>
           <input type='number' min='1' name='number_of_tickets' value={ticketData.number_of_tickets} onChange={updateForm}/>
-          <button id='cancel-create-Ticket' type='button' onClick={resetAndCloseForm}>cancel</button>
-          <button type='submit'>submit</button>
+          <button className='dialog-button' type='submit'>Submit</button>
         </form>
       </dialog>
     </div>
