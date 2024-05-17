@@ -60,18 +60,18 @@ const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCal
       [event.target.name]: event.target.value })
   }
 
-  const toggleSelectedGiveaway = (event, giveawayName) => {
-    if (selectedGiveaway === giveawayName) {
+  const toggleSelectedGiveaway = (event, giveawayId) => {
+    if (selectedGiveaway === giveawayId) {
       setSelectedGiveawayCallback('all');
     } else {
-      setSelectedGiveawayCallback(giveawayName);
+      setSelectedGiveawayCallback(giveawayId);
     }
   }
 
-  const drawWinner = (e, giveawayName) => {
+  const drawWinner = (e, giveawayId) => {
     e.stopPropagation();
     try {
-      const selectedGiveawayTickets = tickets[giveawayName];
+      const selectedGiveawayTickets = tickets[giveawayId];
       const randomIndex = Math.floor(Math.random() * selectedGiveawayTickets.length);
       const winningTicket = selectedGiveawayTickets[randomIndex];
       createWinnerCallback(winningTicket.id, winningTicket.participant_id, winningTicket.giveaway_id, winningTicket.participant_name, winningTicket.participant_phone, winningTicket.participant_email);
@@ -83,8 +83,8 @@ const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCal
   const deleteWinner = (e, confirmed, winnerId, giveawayId, winnerName) => {
     e.stopPropagation();
     if (confirmed) {
-      console.log('are you sure state', areYouSureData);
       deleteWinnerCallback(winnerId, giveawayId);
+      setSelectedGiveawayCallback('all');
     } else {
       setAreYouSureData({
         'itemType': 'Winner',
@@ -104,7 +104,7 @@ const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCal
       : '';
     
     const drawWinnerButton = is_admin ? 
-      <button className='management-button' type="button" onClick={(e) => drawWinner(e, giveaway.name)}>Draw Winner</button> 
+      <button className='management-button' type="button" onClick={(e) => drawWinner(e, giveaway.id)}>Draw Winner</button> 
       : '';
     const winners = giveaway.winners.map((winner) => {
       return (
@@ -118,10 +118,10 @@ const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCal
       )
     });
     
-    const activeClass = selectedGiveaway === giveaway.name ? 'active' : '';
+    const activeClass = selectedGiveaway === giveaway.id ? 'active' : '';
 
     return (
-      <div className={`giveaway-container ${activeClass}`} onClick={(event) => toggleSelectedGiveaway(event, giveaway.name)} key={giveaway.id}>
+      <div className={`giveaway-container ${activeClass}`} onClick={(event) => toggleSelectedGiveaway(event, giveaway.id)} key={giveaway.id}>
         <h4 className="giveaway-title"> {giveaway.name} </h4>
         <p className="giveaway-dates"> {giveaway.start_date} - {giveaway.end_date} </p>
         <div className='giveaway-winners-section'>

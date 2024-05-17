@@ -59,7 +59,7 @@ function App() {
               participant_email: ticket.participant_email
             })
           try {
-            newTickets[ticket.giveaway_name].push({
+            newTickets[ticket.giveaway_id].push({
               id: ticket.id,
               giveaway_id: ticket.giveaway_id,
               participant_id: ticket.participant_id,
@@ -69,7 +69,7 @@ function App() {
               participant_email: ticket.participant_email
             })
           } catch {
-            newTickets[ticket.giveaway_name] = [{
+            newTickets[ticket.giveaway_id] = [{
               id: ticket.id,
               giveaway_id: ticket.giveaway_id,
               participant_id: ticket.participant_id,
@@ -171,6 +171,7 @@ function App() {
             const formattedEndDate = new Date(updatedGiveaway.end_date).toLocaleDateString('en-us',{'month': 'long', 'day': 'numeric', 'year': 'numeric', timeZone: 'UTC'});
             updatedGiveaway.start_date = formattedStartDate;
             updatedGiveaway.end_date = formattedEndDate;
+            updatedGiveaway.winners = giveaway.winners
             return updatedGiveaway;
           } else {
             return giveaway
@@ -178,6 +179,7 @@ function App() {
         })
         
         setGiveaways(updatedGiveaways);
+        getTickets();
       })
       .catch((err) => {
         console.log(err);
