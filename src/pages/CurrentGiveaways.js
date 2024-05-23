@@ -5,6 +5,9 @@ import './CurrentGiveaways.css';
 const CurrentGiveaways = ({giveaways, winnersList}) => {
 
   const giveawaysList = giveaways.map((giveaway) => {
+    const photos = giveaway.photos.map((photo, index) => {
+      return <img key={index} src={`data:image/${photo[1]};base64,${photo[0]}`} alt='giveaway item'/>
+    })
     const winners = giveaway.winners.map((winner) => {
       return (
         <div className='giveaway-winner' key={winner.id}>
@@ -20,6 +23,9 @@ const CurrentGiveaways = ({giveaways, winnersList}) => {
       <div className='giveaway-container' key={giveaway.id}>
         <h4 className="giveaway-title"> {giveaway.name} </h4>
         <p className="giveaway-dates"> {giveaway.start_date} - {giveaway.end_date} </p>
+        <div className='giveaway-photos-section'>
+          {photos}
+        </div>
         <div className='giveaway-winners-section'>
           {winners}
         </div>
@@ -30,10 +36,10 @@ const CurrentGiveaways = ({giveaways, winnersList}) => {
   return (
     <div>
       <NavBar />
-      <div className='giveaways-body'>
+      <main className='giveaways-body'>
         <h3 id='current-giveaways-header'>Current Giveaways</h3>
         {giveawaysList}
-      </div>
+      </main>
       <Footer />
     </div>
   );

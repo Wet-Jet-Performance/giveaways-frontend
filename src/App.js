@@ -31,7 +31,8 @@ function App() {
             name: giveaway.name,
             start_date: giveaway.start_date,
             end_date: giveaway.end_date,
-            winners: giveaway.winners
+            winners: giveaway.winners,
+            photos: giveaway.photos
           };
         });
         setGiveaways(newGiveaways);
@@ -129,24 +130,15 @@ function App() {
   }
 
   const createGiveaway = (newGiveaway) => {
+    const formData = new FormData();
+    formData.append('name', newGiveaway.name);
+    formData.append('start_date', newGiveaway.start_date);
+    formData.append('end_date', newGiveaway.end_date);
+    newGiveaway.photos.forEach(photo => formData.append('photos', photo));
     axios
-      .post(`${api}/giveaways`, newGiveaway)
+      .post(`${api}/giveaways`, newGiveaway, {headers: {'content-type': 'multipart/form-data'}})
       .then((response) => {
-        const formattedStartDate = new Date(newGiveaway.start_date).toLocaleDateString('en-us', { 'month': 'long', 'day': 'numeric', 'year': 'numeric', timeZone: 'UTC' });
-        const formattedEndDate = new Date(newGiveaway.end_date).toLocaleDateString('en-us', { 'month': 'long', 'day': 'numeric', 'year': 'numeric', timeZone: 'UTC' });
-        newGiveaway.start_date = formattedStartDate;
-        newGiveaway.end_date = formattedEndDate;
-        const updatedGiveaways = [
-          ...giveaways,
-          {
-            'id': response.data.id,
-            'name': newGiveaway.name,
-            'start_date': newGiveaway.start_date,
-            'end_date': newGiveaway.end_date,
-            'winners': []
-          }
-        ]
-        setGiveaways(updatedGiveaways);
+        getGiveaways();
         const updatedTickets = {
           ...tickets,
           [newGiveaway.name]: []

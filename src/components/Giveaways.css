@@ -99,3 +99,13 @@
     height: 27px;
     transition: all 0.3s;
 }
+
+.giveaway-photos-section {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}
+
+.giveaway-photos-section img {
+    height: 100px;
+}

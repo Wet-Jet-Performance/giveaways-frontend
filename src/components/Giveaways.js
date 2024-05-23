@@ -106,6 +106,10 @@ const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCal
     const drawWinnerButton = is_admin ? 
       <button className='management-button' type="button" onClick={(e) => drawWinner(e, giveaway.id)}>Draw Winner</button> 
       : '';
+    
+    const photos = giveaway.photos.map((photo) => {
+      return <img src={`data:image/${photo[1]};base64,${photo[0]}`} alt='giveaway item'/>
+    })
     const winners = giveaway.winners.map((winner) => {
       return (
         <div className='giveaway-winner' key={winner.id}>
@@ -124,6 +128,9 @@ const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCal
       <div className={`giveaway-container ${activeClass}`} onClick={(event) => toggleSelectedGiveaway(event, giveaway.id)} key={giveaway.id}>
         <h4 className="giveaway-title"> {giveaway.name} </h4>
         <p className="giveaway-dates"> {giveaway.start_date} - {giveaway.end_date} </p>
+        <div className='giveaway-photos-section'>
+          {photos}
+        </div>
         <div className='giveaway-winners-section'>
           {winners}
         </div>
