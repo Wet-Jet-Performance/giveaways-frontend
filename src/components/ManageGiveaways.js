@@ -1,16 +1,19 @@
 import { useState, useRef } from 'react';
-import './Giveaways.css';
+import './ManageGiveaways.css';
 import AreYouSure from './AreYouSure';
+import EditGiveawayForm from './EditGiveawayForm';
 import trashCanIcon from '../assets/trash-can-white.png';
 
-const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCallback, updateGiveawayCallback, selectedGiveaway, setSelectedGiveawayCallback, createWinnerCallback, deleteWinnerCallback }) => {
+const ManageGiveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCallback, updateGiveawayCallback, selectedGiveaway, setSelectedGiveawayCallback, createWinnerCallback, deleteWinnerCallback }) => {
   const giveawayAreYouSureDialogRef = useRef(null);
   const dialogFormRef = useRef(null);
+  
   const defaultGiveaway = {
     'id': '',
     'name': '',
     'start_date': '',
-    'end_date': ''
+    'end_date': '',
+    'photos': ''
   };
 
   const defaultAreYouSureData = {
@@ -33,32 +36,14 @@ const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCal
       id: giveaway.id,
       name: giveaway.name,
       start_date: formattedStartDate,
-      end_date: formattedEndDate
+      end_date: formattedEndDate,
+      photos: giveaway.photos
     })
 
     dialogFormRef.current.showModal();
     
   }
 
-  const deleteGiveaway = (event, confirmed=false) => {
-    if (confirmed) { 
-      dialogFormRef.current.close()
-      deleteGiveawayCallback(updatedGiveawayData.id)
-    } else {
-      setAreYouSureData({
-        'itemType': 'Giveaway',
-        'itemId': updatedGiveawayData.id,
-        'itemName': updatedGiveawayData.name,
-        'deleteCallback': deleteGiveaway
-      })
-      giveawayAreYouSureDialogRef.current.showModal();
-    }
-  }
-
-  const updateForm = (event) => {
-    setUpdatedGiveawayData({...updatedGiveawayData,
-      [event.target.name]: event.target.value })
-  }
 
   const toggleSelectedGiveaway = (event, giveawayId) => {
     if (selectedGiveaway === giveawayId) {
@@ -107,8 +92,8 @@ const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCal
       <button className='management-button' type="button" onClick={(e) => drawWinner(e, giveaway.id)}>Draw Winner</button> 
       : '';
     
-    const photos = giveaway.photos.map((photo) => {
-      return <img src={`data:image/${photo[1]};base64,${photo[0]}`} alt='giveaway item'/>
+    const photos = giveaway.photos.map((photo, index) => {
+      return <img key={index} src={`data:image/${photo[1]};base64,${photo[0]}`} alt='giveaway item'/>
     })
     const winners = giveaway.winners.map((winner) => {
       return (
@@ -143,22 +128,15 @@ const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCal
   return (
     <div>
       {giveawaysList}
-      <dialog ref={dialogFormRef}>
-        <button className='close-dialog' type='button' onClick={() => dialogFormRef.current.close()}>x</button>
-        <header>Edit Giveaway</header>
-        <form method='dialog' onSubmit={() => updateGiveawayCallback(updatedGiveawayData)}>
-          <label htmlFor='name'> Name </label>
-          <input name='name' value={updatedGiveawayData.name} onChange={updateForm}/>
-          <label htmlFor='start_date'> Start Date </label>
-          <input type='date' name='start_date' value={updatedGiveawayData.start_date} onChange={updateForm}/>
-          <label htmlFor='end_date'> End Date </label>
-          <input type='date' name='end_date' value={updatedGiveawayData.end_date} onChange={updateForm}/>
-          <div className='dialog-buttons'>
-            <button className='dialog-button' type='submit'>Save</button>
-            <button className='dialog-button' type='button' id='delete-giveaway-btn' onClick={deleteGiveaway}>Delete Giveaway</button>
-          </div>
-        </form>
-      </dialog>
+      <EditGiveawayForm 
+        dialogFormRef={dialogFormRef}
+        updatedGiveawayData={updatedGiveawayData}
+        setUpdatedGiveawayDataCallback={setUpdatedGiveawayData}
+        updateGiveawayCallback={updateGiveawayCallback}
+        deleteGiveawayCallback={deleteGiveawayCallback}
+        giveawayAreYouSureDialogRef={giveawayAreYouSureDialogRef}
+        setAreYouSureDataCallback={setAreYouSureData}
+      />
       <AreYouSure
         areYouSureDialogRef={giveawayAreYouSureDialogRef}
         itemType={areYouSureData.itemType}
@@ -172,4 +150,4 @@ const Giveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCal
   );
 };
 
-export default Giveaways;
+export default ManageGiveaways;

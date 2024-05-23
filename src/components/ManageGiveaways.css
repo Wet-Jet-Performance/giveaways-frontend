@@ -42,12 +42,6 @@
     font-size: 14px;
 }
 
-.dialog-buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-}
-
 .giveaway-container .management-button {
     padding: 10px;
     z-index: 10;
@@ -55,25 +49,6 @@
 
 .giveaway-container .management-button:hover {
     background-color: red;
-}
-
-.close-dialog {
-    position: absolute;
-    font-size: 40px;
-    margin: 0;
-    top: -3px;
-    right: 11px;
-    background-color: transparent;
-}
-
-.close-dialog:hover {
-    color: red;
-}
-
-.dialog-buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 }
 
 .giveaway-winner-body {

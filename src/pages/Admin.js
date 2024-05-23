@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import Giveaways from '../components/Giveaways';
+import ManageGiveaways from '../components/ManageGiveaways';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Tickets from '../components/Tickets';
@@ -51,7 +51,7 @@ const Admin = ({ giveaways, tickets, participants, winners,  createGiveawayCallb
       </div>
       <main className='admin-body'>
         <section className='admin-giveaways'>
-          <Giveaways 
+          <ManageGiveaways 
             giveaways={giveaways}
             tickets={tickets}
             winnersList={winners}
