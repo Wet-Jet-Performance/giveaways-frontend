@@ -29,6 +29,7 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, is_admin, deleteGivea
   const editGiveaway = (e, giveaway) => {
     e.stopPropagation();
 
+    // convert from Month Day, Year to YYYY-MM-DD
     const formattedStartDate = new Date(giveaway.start_date).toISOString().substring(0, 10);
     const formattedEndDate = new Date(giveaway.end_date).toISOString().substring(0, 10);
     

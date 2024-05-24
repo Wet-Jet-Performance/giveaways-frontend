@@ -3,8 +3,16 @@ import Footer from '../components/Footer';
 import './CurrentGiveaways.css';
 
 const CurrentGiveaways = ({giveaways, winnersList}) => {
+  const filteredGiveaways = giveaways.filter((giveaway) => {
+    const formattedStartDate = new Date(giveaway.start_date);
+    const formattedEndDate = new Date(giveaway.end_date);
+    const today = new Date();
 
-  const giveawaysList = giveaways.map((giveaway) => {
+    return today >= formattedStartDate && today <= formattedEndDate
+  })
+
+  const giveawaysList = filteredGiveaways.map((giveaway) => {
+
     const photos = giveaway.photos.map((photo, index) => {
       return <img key={index} src={`data:image/${photo[1]};base64,${photo[0]}`} alt='giveaway item'/>
     })
@@ -38,7 +46,7 @@ const CurrentGiveaways = ({giveaways, winnersList}) => {
       <NavBar />
       <main className='giveaways-body'>
         <h3 id='current-giveaways-header'>Current Giveaways</h3>
-        {giveawaysList}
+        {giveawaysList.reverse()}
       </main>
       <Footer />
     </div>
