@@ -12,8 +12,7 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, is_admin, deleteGivea
     'id': '',
     'name': '',
     'start_date': '',
-    'end_date': '',
-    'photos': ''
+    'end_date': ''
   };
 
   const defaultAreYouSureData = {
@@ -37,8 +36,7 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, is_admin, deleteGivea
       id: giveaway.id,
       name: giveaway.name,
       start_date: formattedStartDate,
-      end_date: formattedEndDate,
-      photos: giveaway.photos
+      end_date: formattedEndDate
     })
 
     dialogFormRef.current.showModal();
@@ -93,9 +91,6 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, is_admin, deleteGivea
       <button className='management-button' type="button" onClick={(e) => drawWinner(e, giveaway.id)}>Draw Winner</button> 
       : '';
     
-    const photos = giveaway.photos.map((photo, index) => {
-      return <img key={index} src={`data:image/${photo[1]};base64,${photo[0]}`} alt='giveaway item'/>
-    })
     const winners = giveaway.winners.map((winner) => {
       return (
         <div className='giveaway-winner' key={winner.id}>
@@ -114,9 +109,6 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, is_admin, deleteGivea
       <div className={`giveaway-container ${activeClass}`} onClick={(event) => toggleSelectedGiveaway(event, giveaway.id)} key={giveaway.id}>
         <h4 className="giveaway-title"> {giveaway.name} </h4>
         <p className="giveaway-dates"> {giveaway.start_date} - {giveaway.end_date} </p>
-        <div className='giveaway-photos-section'>
-          {photos}
-        </div>
         <div className='giveaway-winners-section'>
           {winners}
         </div>
@@ -128,7 +120,7 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, is_admin, deleteGivea
 
   return (
     <div>
-      {giveawaysList}
+      {giveawaysList.reverse()}
       <EditGiveawayForm 
         dialogFormRef={dialogFormRef}
         updatedGiveawayData={updatedGiveawayData}
@@ -137,6 +129,7 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, is_admin, deleteGivea
         deleteGiveawayCallback={deleteGiveawayCallback}
         giveawayAreYouSureDialogRef={giveawayAreYouSureDialogRef}
         setAreYouSureDataCallback={setAreYouSureData}
+        setSelectedGiveawayCallback={setSelectedGiveawayCallback}
       />
       <AreYouSure
         areYouSureDialogRef={giveawayAreYouSureDialogRef}

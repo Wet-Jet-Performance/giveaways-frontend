@@ -1,11 +1,12 @@
 import './EditGiveawayForm.css';
 
-const EditGiveawayForm = ({ dialogFormRef, giveawayAreYouSureDialogRef, updatedGiveawayData, setUpdatedGiveawayDataCallback, updateGiveawayCallback, deleteGiveawayCallback, setAreYouSureDataCallback }) => {
+const EditGiveawayForm = ({ dialogFormRef, giveawayAreYouSureDialogRef, updatedGiveawayData, setUpdatedGiveawayDataCallback, updateGiveawayCallback, deleteGiveawayCallback, setAreYouSureDataCallback, setSelectedGiveawayCallback }) => {
 
   const deleteGiveaway = (event, confirmed = false) => {
     if (confirmed) {
       dialogFormRef.current.close()
       deleteGiveawayCallback(updatedGiveawayData.id)
+      setSelectedGiveawayCallback('all');
     } else {
       setAreYouSureDataCallback({
         'itemType': 'Giveaway',

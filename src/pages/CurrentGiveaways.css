@@ -3,3 +3,8 @@
     overflow: scroll;
     height: 80vh;
 }
+
+#current-giveaways-header {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  letter-spacing: 5px;
+}

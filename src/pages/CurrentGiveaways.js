@@ -45,7 +45,7 @@ const CurrentGiveaways = ({giveaways, winnersList}) => {
     <div>
       <NavBar />
       <main className='giveaways-body'>
-        <h3 id='current-giveaways-header'>Current Giveaways</h3>
+        <h1 id='current-giveaways-header'>Current Giveaways</h1>
         {giveawaysList.reverse()}
       </main>
       <Footer />
