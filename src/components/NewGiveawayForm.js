@@ -51,7 +51,7 @@ const NewGiveawayForm = ({ createGiveawayDialogRef, createGiveawayCallback}) => 
         <input type='date' id='start_date' name='start_date' value={newGiveawayData.start_date} onChange={updateForm} required/>
         <label htmlFor='end_date'> End Date </label>
         <input type='date' id='end_date' name='end_date' value={newGiveawayData.end_date} onChange={updateForm} required/>
-        <label htmlFor='giveaway_photos'> Upload Photos </label>
+        {/* <label htmlFor='giveaway_photos'> Upload Photos </label> */}
         {/* <input type='file' id='giveaway_photos' name='giveaway_photos' accept='image/*' onChange={updateForm} ref={photoUploadRef} multiple /> */}
         <button className='dialog-button' type='submit'>Submit</button>
       </form>
