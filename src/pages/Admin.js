@@ -8,7 +8,7 @@ import NewTicketForm from '../components/NewTicketForm';
 import './Admin.css'
 import NewGiveawayForm from '../components/NewGiveawayForm';
 
-const Admin = ({ giveaways, tickets, participants, winners,  createGiveawayCallback, deleteGiveawayCallback, updateGiveawayCallback, createTicketCallback, deleteTicketCallback, createParticipantAndTicketCallback, createWinnerCallback, deleteWinnerCallback }) => {
+const Admin = ({ giveaways, tickets, participants, winners,  createGiveawayCallback, deleteGiveawayCallback, updateGiveawayCallback, createTicketCallback, deleteTicketCallback, createParticipantAndTicketCallback, createWinnerCallback, deleteWinnerCallback, createPhotoCallback, deletePhotoCallback }) => {
 
   const [selectedGiveaway, setSelectedGiveaway] = useState('all')
   const {loginWithRedirect, isAuthenticated} = useAuth0();
@@ -55,13 +55,14 @@ const Admin = ({ giveaways, tickets, participants, winners,  createGiveawayCallb
             giveaways={giveaways}
             tickets={tickets}
             winnersList={winners}
-            is_admin={true}
             deleteGiveawayCallback={deleteGiveawayCallback}
             updateGiveawayCallback={updateGiveawayCallback}
             selectedGiveaway={selectedGiveaway}
             setSelectedGiveawayCallback={setSelectedGiveaway}
             createWinnerCallback={createWinnerCallback}
             deleteWinnerCallback={deleteWinnerCallback}
+            createPhotoCallback={createPhotoCallback}
+            deletePhotoCallback={deletePhotoCallback}
           />
           <NewGiveawayForm
             createGiveawayDialogRef={createGiveawayDialogRef}

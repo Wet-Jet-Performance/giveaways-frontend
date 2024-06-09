@@ -1,10 +1,10 @@
 import './EditGiveawayForm.css';
 
-const EditGiveawayForm = ({ dialogFormRef, giveawayAreYouSureDialogRef, updatedGiveawayData, setUpdatedGiveawayDataCallback, updateGiveawayCallback, deleteGiveawayCallback, setAreYouSureDataCallback, setSelectedGiveawayCallback }) => {
+const EditGiveawayForm = ({ editGiveawayFormRef, giveawayAreYouSureDialogRef, updatedGiveawayData, setUpdatedGiveawayDataCallback, updateGiveawayCallback, deleteGiveawayCallback, setAreYouSureDataCallback, setSelectedGiveawayCallback }) => {
 
   const deleteGiveaway = (event, confirmed = false) => {
     if (confirmed) {
-      dialogFormRef.current.close()
+      editGiveawayFormRef.current.close()
       deleteGiveawayCallback(updatedGiveawayData.id)
       setSelectedGiveawayCallback('all');
     } else {
@@ -26,8 +26,8 @@ const EditGiveawayForm = ({ dialogFormRef, giveawayAreYouSureDialogRef, updatedG
   }
 
   return (
-    <dialog ref={dialogFormRef}>
-      <button className='close-dialog' type='button' onClick={() => dialogFormRef.current.close()}>x</button>
+    <dialog ref={editGiveawayFormRef}>
+      <button className='close-dialog' type='button' onClick={() => editGiveawayFormRef.current.close()}>x</button>
       <header>Edit Giveaway</header>
       <form method='dialog' onSubmit={() => updateGiveawayCallback(updatedGiveawayData)}>
         <label htmlFor='name'> Name </label>

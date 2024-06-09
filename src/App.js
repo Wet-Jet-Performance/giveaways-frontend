@@ -31,7 +31,8 @@ function App() {
             name: giveaway.name,
             start_date: giveaway.start_date,
             end_date: giveaway.end_date,
-            winners: giveaway.winners
+            winners: giveaway.winners,
+            photos: giveaway.photos
           };
         });
         setGiveaways(newGiveaways);
@@ -132,21 +133,7 @@ function App() {
     axios
       .post(`${api}/giveaways`, newGiveaway)
       .then((response) => {
-        const formattedStartDate = new Date(newGiveaway.start_date).toLocaleDateString('en-us', { 'month': 'long', 'day': 'numeric', 'year': 'numeric', timeZone: 'UTC' });
-        const formattedEndDate = new Date(newGiveaway.end_date).toLocaleDateString('en-us', { 'month': 'long', 'day': 'numeric', 'year': 'numeric', timeZone: 'UTC' });
-        newGiveaway.start_date = formattedStartDate;
-        newGiveaway.end_date = formattedEndDate;
-        const updatedGiveaways = [
-          ...giveaways,
-          {
-            'id': response.data.id,
-            'name': newGiveaway.name,
-            'start_date': newGiveaway.start_date,
-            'end_date': newGiveaway.end_date,
-            'winners': []
-          }
-        ]
-        setGiveaways(updatedGiveaways);
+        getGiveaways();
         const updatedTickets = {
           ...tickets,
           [newGiveaway.name]: []
@@ -163,20 +150,7 @@ function App() {
     axios
       .put(`${api}/giveaways/${updatedGiveaway.id}`, updatedGiveaway)
       .then((response) => {
-        const updatedGiveaways = giveaways.map((giveaway) => {
-          if (giveaway.id === updatedGiveaway.id) {
-            const formattedStartDate = new Date(updatedGiveaway.start_date).toLocaleDateString('en-us',{'month': 'long', 'day': 'numeric', 'year': 'numeric', timeZone: 'UTC'});
-            const formattedEndDate = new Date(updatedGiveaway.end_date).toLocaleDateString('en-us',{'month': 'long', 'day': 'numeric', 'year': 'numeric', timeZone: 'UTC'});
-            updatedGiveaway.start_date = formattedStartDate;
-            updatedGiveaway.end_date = formattedEndDate;
-            updatedGiveaway.winners = giveaway.winners
-            return updatedGiveaway;
-          } else {
-            return giveaway
-          }
-        })
-        
-        setGiveaways(updatedGiveaways);
+        getGiveaways();
         getTickets();
       })
       .catch((err) => {
@@ -305,6 +279,65 @@ function App() {
       });
   }
 
+  const createPhoto = (photo, giveawayId) => {
+    axios
+      .get(`${api}/photos/photo-upload`)
+      .then((response) => {
+        console.log(response.data.result.uploadURL);
+        uploadPhotoToCDN(response.data.result.uploadURL, photo, giveawayId)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const uploadPhotoToCDN = (uploadUrl, photo, giveawayId) => {
+    console.log('sending photo to cloudflare')
+    const formData = new FormData();
+    formData.append('file', photo);
+    axios
+      .post(uploadUrl, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then((response) => {
+        addPhotoToDB(response.data.result.id, giveawayId)
+      })
+      .catch((err) => {
+        if (err.response.data.errors[0].code === 5443) {
+          alert("Photo upload failed: photos must be 10mb or smaller. Please try again with a smaller photo.")
+        }
+        console.log(err)
+      })
+  }
+
+  const addPhotoToDB = (cloudflareId, giveawayId) => {
+    console.log('sending photo to DB', giveawayId)
+    axios
+      .post(`${api}/photos`, {
+        cloudflare_id: cloudflareId,
+        giveaway_id: giveawayId
+      })
+      .then((response) => {
+        getGiveaways();
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const deletePhoto = (photoId) => {
+    axios
+      .delete(`${api}/photos/${photoId}`)
+      .then((response) => {
+        getGiveaways();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -324,6 +357,8 @@ function App() {
           createParticipantAndTicketCallback={createParticipantAndTicket}
           createWinnerCallback={createWinner}
           deleteWinnerCallback={deleteWinner}
+          createPhotoCallback={createPhoto}
+          deletePhotoCallback={deletePhoto}
         />}
       />
     </Routes>

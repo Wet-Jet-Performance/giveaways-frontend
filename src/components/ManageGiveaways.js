@@ -1,12 +1,14 @@
 import { useState, useRef } from 'react';
 import './ManageGiveaways.css';
 import AreYouSure from './AreYouSure';
+import AddPhotoForm from './AddPhotoForm';
 import EditGiveawayForm from './EditGiveawayForm';
 import trashCanIcon from '../assets/trash-can-white.png';
 
-const ManageGiveaways = ({giveaways, tickets, winnersList, is_admin, deleteGiveawayCallback, updateGiveawayCallback, selectedGiveaway, setSelectedGiveawayCallback, createWinnerCallback, deleteWinnerCallback }) => {
+const ManageGiveaways = ({giveaways, tickets, winnersList, deleteGiveawayCallback, updateGiveawayCallback, selectedGiveaway, setSelectedGiveawayCallback, createWinnerCallback, deleteWinnerCallback, createPhotoCallback, deletePhotoCallback }) => {
   const giveawayAreYouSureDialogRef = useRef(null);
-  const dialogFormRef = useRef(null);
+  const editGiveawayFormRef = useRef(null);
+  const addPhotoFormRef = useRef(null);
   
   const defaultGiveaway = {
     'id': '',
@@ -39,8 +41,37 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, is_admin, deleteGivea
       end_date: formattedEndDate
     })
 
-    dialogFormRef.current.showModal();
+    editGiveawayFormRef.current.showModal();
     
+  }
+
+  const addPhoto = (e, giveaway) => {
+    e.stopPropagation();
+    setUpdatedGiveawayData({
+      id: giveaway.id,
+      name: giveaway.name,
+      start_date: giveaway.start_date,
+      end_date: giveaway.end_date
+    })
+    addPhotoFormRef.current.showModal()
+
+  }
+
+  const deletePhoto = (e, confirmed, photoId, giveawayName) => {
+    e.stopPropagation();
+    if (confirmed) {
+      deletePhotoCallback(photoId);
+      setSelectedGiveawayCallback('all');
+    } else {
+      setAreYouSureData({
+        'itemType': 'Photo',
+        'itemId': photoId,
+        'itemName': giveawayName,
+        'deleteCallback': deletePhoto,
+        'callbackArgs': [photoId, giveawayName]
+      })
+      giveawayAreYouSureDialogRef.current.showModal();
+    }
   }
 
 
@@ -83,13 +114,14 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, is_admin, deleteGivea
   }
 
   const giveawaysList = giveaways.map((giveaway) => {
-    const editButton = is_admin ? 
-      <button type="button" className='edit-giveaway-btn management-button' onClick={(e) => editGiveaway(e, giveaway)}>Edit</button> 
-      : '';
-    
-    const drawWinnerButton = is_admin ? 
-      <button className='management-button' type="button" onClick={(e) => drawWinner(e, giveaway.id)}>Draw Winner</button> 
-      : '';
+    const photos = giveaway.photos.map((photo) => {
+      return (
+        <div className='manage-image'>
+          <img className='giveaway-photo' key={photo.id} src={`https://imagedelivery.net/E868QW-m3V6nzVTKXKDrtg/${photo.cloudflare_id}/public`} alt='' />
+          <button className='delete-giveaway-photo-btn' type='button' onClick={(e) => deletePhoto(e, false, photo.id, giveaway.name)}><img src={trashCanIcon} alt='delete' /></button>
+        </div>
+      )
+    })
     
     const winners = giveaway.winners.map((winner) => {
       return (
@@ -109,11 +141,15 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, is_admin, deleteGivea
       <div className={`giveaway-container ${activeClass}`} onClick={(event) => toggleSelectedGiveaway(event, giveaway.id)} key={giveaway.id}>
         <h4 className="giveaway-title"> {giveaway.name} </h4>
         <p className="giveaway-dates"> {giveaway.start_date} - {giveaway.end_date} </p>
+        <div className='giveaway-photos-section'>
+          <button className='add-photo-btn' type="button" onClick={(e) => addPhoto(e, giveaway)}> Add Photo </button>
+          {photos}
+        </div>
         <div className='giveaway-winners-section'>
           {winners}
         </div>
-        {editButton}
-        {drawWinnerButton}
+        <button type="button" className='edit-giveaway-btn management-button' onClick={(e) => editGiveaway(e, giveaway)}>Edit</button> 
+        <button className='management-button' type="button" onClick={(e) => drawWinner(e, giveaway.id)}>Draw Winner</button> 
       </div>
     )
   })
@@ -121,8 +157,13 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, is_admin, deleteGivea
   return (
     <div>
       {giveawaysList.reverse()}
+      <AddPhotoForm
+        addPhotoFormRef={addPhotoFormRef}
+        updatedGiveawayData={updatedGiveawayData}
+        createPhotoCallback={createPhotoCallback}
+      />
       <EditGiveawayForm 
-        dialogFormRef={dialogFormRef}
+        editGiveawayFormRef={editGiveawayFormRef}
         updatedGiveawayData={updatedGiveawayData}
         setUpdatedGiveawayDataCallback={setUpdatedGiveawayData}
         updateGiveawayCallback={updateGiveawayCallback}
