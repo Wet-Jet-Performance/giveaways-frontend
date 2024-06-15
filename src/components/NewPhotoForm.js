@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-const AddPhotoForm = ({ addPhotoFormRef, updatedGiveawayData, createPhotoCallback }) => {
+const NewPhotoForm = ({ addPhotoFormRef, updatedGiveawayData, createPhotoCallback }) => {
 
   const [newPhoto, setNewPhoto] = useState('');
   const photoUploadRef = useRef(null);
@@ -37,4 +37,4 @@ const AddPhotoForm = ({ addPhotoFormRef, updatedGiveawayData, createPhotoCallbac
   );
 };
 
-export default AddPhotoForm;
+export default NewPhotoForm;
