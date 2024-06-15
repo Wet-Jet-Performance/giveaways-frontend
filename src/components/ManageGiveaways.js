@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import './ManageGiveaways.css';
 import AreYouSure from './AreYouSure';
-import AddPhotoForm from './AddPhotoForm';
+import NewPhotoForm from './NewPhotoForm';
 import EditGiveawayForm from './EditGiveawayForm';
 import trashCanIcon from '../assets/trash-can-white.png';
 
@@ -116,8 +116,8 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, deleteGiveawayCallbac
   const giveawaysList = giveaways.map((giveaway) => {
     const photos = giveaway.photos.map((photo) => {
       return (
-        <div className='manage-image'>
-          <img className='giveaway-photo' key={photo.id} src={`https://imagedelivery.net/E868QW-m3V6nzVTKXKDrtg/${photo.cloudflare_id}/public`} alt='' />
+        <div key={photo.id} className='manage-image'>
+          <img className='giveaway-photo' src={`https://imagedelivery.net/E868QW-m3V6nzVTKXKDrtg/${photo.cloudflare_id}/public`} alt='' />
           <button className='delete-giveaway-photo-btn' type='button' onClick={(e) => deletePhoto(e, false, photo.id, giveaway.name)}><img src={trashCanIcon} alt='delete' /></button>
         </div>
       )
@@ -157,7 +157,7 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, deleteGiveawayCallbac
   return (
     <div>
       {giveawaysList.reverse()}
-      <AddPhotoForm
+      <NewPhotoForm
         addPhotoFormRef={addPhotoFormRef}
         updatedGiveawayData={updatedGiveawayData}
         createPhotoCallback={createPhotoCallback}
