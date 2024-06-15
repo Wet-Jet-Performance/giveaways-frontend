@@ -181,6 +181,24 @@ function App() {
       })
       .then((response) => {
         getTickets();
+        const ticket_ids = response.data.ids
+        emailNewTicket(participant_id, giveaway_id, ticket_ids)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  const emailNewTicket = (participant_id, giveaway_id, ticket_ids) => {
+    axios
+      .post(`${api}/tickets/email`, {
+        participant_id: participant_id,
+        giveaway_id: giveaway_id,
+        ticket_ids: ticket_ids
+      })
+      .then((response) => {
+        console.log('email sent');
+
       })
       .catch((err) => {
         console.log(err);
