@@ -25,8 +25,10 @@ const NewTicketForm = ({ addTicketsDialogRef, giveaways, participants, createTic
           email: participants[event.target.value].email
         }
         setTicketData(newTicket);
+        setSelectedParticipant(event.target.value)
       } catch {
         setTicketData(defaultTicket);
+        setSelectedParticipant(defaultTicket);
       }
     } else {
       const newTicket = {
@@ -56,7 +58,7 @@ const NewTicketForm = ({ addTicketsDialogRef, giveaways, participants, createTic
   
   const participantsDropDown = participants.map((participant, index) => {
     return (
-      <option key={participant.id} value={index}> {participant.name} {participant.phone_number} </option>
+      <option key={index} value={index}> {participant.name} {participant.phone_number} </option>
     )
   })
 
