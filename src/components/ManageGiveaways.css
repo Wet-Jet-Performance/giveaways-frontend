@@ -90,7 +90,7 @@
     white-space: nowrap;
 }
 
-.manage-image {
+.photo-square {
     display: grid;
     grid-template-columns: 80% 20%;
     grid-template-rows: 80% 20%;

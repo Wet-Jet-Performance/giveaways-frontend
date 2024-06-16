@@ -116,7 +116,7 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, deleteGiveawayCallbac
   const giveawaysList = giveaways.map((giveaway) => {
     const photos = giveaway.photos.map((photo) => {
       return (
-        <div key={photo.id} className='manage-image'>
+        <div key={photo.id} className='photo-square'>
           <img className='giveaway-photo' src={`https://imagedelivery.net/E868QW-m3V6nzVTKXKDrtg/${photo.cloudflare_id}/public`} alt='' />
           <button className='delete-giveaway-photo-btn' type='button' onClick={(e) => deletePhoto(e, false, photo.id, giveaway.name)}><img src={trashCanIcon} alt='delete' /></button>
         </div>

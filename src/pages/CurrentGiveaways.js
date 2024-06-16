@@ -15,7 +15,9 @@ const CurrentGiveaways = ({giveaways, winnersList}) => {
 
     const photos = giveaway.photos.map((photo) => {
       return (
-        <img key={photo.id} src={`https://imagedelivery.net/E868QW-m3V6nzVTKXKDrtg/${photo.cloudflare_id}/public`} alt='' />
+        <div key={photo.id} className='photo-square'>
+          <img className='giveaway-photo' src={`https://imagedelivery.net/E868QW-m3V6nzVTKXKDrtg/${photo.cloudflare_id}/public`} alt='' />
+        </div>
       )
     })
     const winners = giveaway.winners.map((winner) => {
