@@ -3,9 +3,14 @@
     /* background-color: rgba(240, 248, 255, 0.101); */
     border-radius: 2px;
     margin: 5px auto;
-    padding: 0 5px 20px 20px;
+    padding: 0 20px 20px 20px;
     transition: all 0.2s;
     font-size: 18px;
+}
+
+.giveaway-container header {
+    display: flex;
+    justify-content: space-between;
 }
 
 .giveaway-title {
@@ -13,6 +18,17 @@
     color: rgb(255, 59, 59);
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     letter-spacing: 5px;
+    margin: 20px 0;
+}
+
+.giveaway-dates {
+    margin: 20px 0;
+    font-size: 22px;
+}
+
+.giveaway-description {
+    margin: 20px 0;
+    white-space: pre-line;
 }
 
 .giveaway-container:hover {

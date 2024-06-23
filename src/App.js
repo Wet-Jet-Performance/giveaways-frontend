@@ -29,6 +29,7 @@ function App() {
           return {
             id: giveaway.id,
             name: giveaway.name,
+            description: giveaway.description,
             start_date: giveaway.start_date,
             end_date: giveaway.end_date,
             winners: giveaway.winners,

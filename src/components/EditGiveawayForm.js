@@ -31,7 +31,9 @@ const EditGiveawayForm = ({ editGiveawayFormRef, giveawayAreYouSureDialogRef, up
       <header>Edit Giveaway</header>
       <form method='dialog' onSubmit={() => updateGiveawayCallback(updatedGiveawayData)}>
         <label htmlFor='name'> Name </label>
-        <input name='name' value={updatedGiveawayData.name} onChange={updateForm} />
+        <input id='name' name='name' value={updatedGiveawayData.name} onChange={updateForm} />
+        <label htmlFor='description'> Description </label>
+        <textarea id='description' name='description' value={updatedGiveawayData.description} onChange={updateForm} />
         <label htmlFor='start_date'> Start Date </label>
         <input type='date' name='start_date' value={updatedGiveawayData.start_date} onChange={updateForm} />
         <label htmlFor='end_date'> End Date </label>

@@ -13,6 +13,7 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, deleteGiveawayCallbac
   const defaultGiveaway = {
     'id': '',
     'name': '',
+    'description': '',
     'start_date': '',
     'end_date': ''
   };
@@ -37,6 +38,7 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, deleteGiveawayCallbac
     setUpdatedGiveawayData({
       id: giveaway.id,
       name: giveaway.name,
+      description: giveaway.description,
       start_date: formattedStartDate,
       end_date: formattedEndDate
     })
@@ -50,6 +52,7 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, deleteGiveawayCallbac
     setUpdatedGiveawayData({
       id: giveaway.id,
       name: giveaway.name,
+      description: giveaway.description,
       start_date: giveaway.start_date,
       end_date: giveaway.end_date
     })
@@ -139,8 +142,11 @@ const ManageGiveaways = ({giveaways, tickets, winnersList, deleteGiveawayCallbac
 
     return (
       <div className={`giveaway-container ${activeClass}`} onClick={(event) => toggleSelectedGiveaway(event, giveaway.id)} key={giveaway.id}>
-        <h4 className="giveaway-title"> {giveaway.name} </h4>
-        <p className="giveaway-dates"> {giveaway.start_date} - {giveaway.end_date} </p>
+        <header>
+          <h4 className="giveaway-title"> {giveaway.name} </h4>
+          <p className="giveaway-dates"> {giveaway.start_date} - {giveaway.end_date} </p>
+        </header>
+        <p className="giveaway-description"> {giveaway.description} </p>
         <div className='giveaway-photos-section'>
           <button className='add-photo-btn' type="button" onClick={(e) => addPhoto(e, giveaway)}> Add Photo </button>
           {photos}

@@ -104,13 +104,6 @@ form {
   justify-content: space-around;
 }
 
-input {
-  border: none;
-  border-radius: 5px;
-  padding: 5px;
-  background-color: rgb(183, 221, 236);
-}
-
 select {
   border: none;
   border-radius: 5px;

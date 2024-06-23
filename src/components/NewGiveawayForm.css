@@ -17,6 +17,22 @@ dialog input {
     margin: 10px 0 20px 0;
 }
 
+input {
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: rgb(183, 221, 236);
+}
+
+dialog textarea {
+    font-size: 18px;
+    margin: 10px 0 20px 0;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: rgb(183, 221, 236);
+}
+
 dialog select {
     font-size: 18px;
     margin: 10px 0 20px 0;

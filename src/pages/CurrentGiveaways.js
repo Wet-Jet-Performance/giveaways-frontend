@@ -33,8 +33,11 @@ const CurrentGiveaways = ({giveaways, winnersList}) => {
 
     return (
       <div className='giveaway-container' key={giveaway.id}>
-        <h4 className="giveaway-title"> {giveaway.name} </h4>
-        <p className="giveaway-dates"> {giveaway.start_date} - {giveaway.end_date} </p>
+        <header>
+          <h4 className="giveaway-title"> {giveaway.name} </h4>
+          <p className="giveaway-dates"> {giveaway.start_date} - {giveaway.end_date} </p>
+        </header>
+        <p className="giveaway-description"> {giveaway.description} </p>
         <div className='giveaway-photos-section'>
           {photos}
         </div>

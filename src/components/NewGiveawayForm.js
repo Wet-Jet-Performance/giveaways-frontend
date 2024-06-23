@@ -5,6 +5,7 @@ const NewGiveawayForm = ({ createGiveawayDialogRef, createGiveawayCallback}) => 
 
     const defaultGiveaway = {
       'name': '',
+      'description': '',
       'start_date': '',
       'end_date': ''
     };
@@ -36,6 +37,8 @@ const NewGiveawayForm = ({ createGiveawayDialogRef, createGiveawayCallback}) => 
       <form method='dialog' onSubmit={submitForm}>
         <label htmlFor='name'> Name </label>
         <input id='name' name='name' value={newGiveawayData.name} onChange={updateForm} required/>
+        <label htmlFor='description'> Description </label>
+        <input id='description' name='description' value={newGiveawayData.description} onChange={updateForm} />
         <label htmlFor='start_date'> Start Date </label>
         <input type='date' id='start_date' name='start_date' value={newGiveawayData.start_date} onChange={updateForm} required/>
         <label htmlFor='end_date'> End Date </label>
