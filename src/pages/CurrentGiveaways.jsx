@@ -32,7 +32,7 @@ const CurrentGiveaways = ({giveaways, winnersList}) => {
     });
 
     return (
-      <div className='giveaway-container' key={giveaway.id}>
+      <div className='giveaway-container bg-gray-900' key={giveaway.id}>
         <header>
           <h4 className="giveaway-title"> {giveaway.name} </h4>
           <p className="giveaway-dates"> {giveaway.start_date} - {giveaway.end_date} </p>
@@ -49,13 +49,13 @@ const CurrentGiveaways = ({giveaways, winnersList}) => {
   })
 
   return (
-    <div>
+    <div className='bg-gray-900 text-white'>
       <NavBar />
-      <main className='giveaways-body'>
-        <h1 id='current-giveaways-header'>Current Giveaways</h1>
+      <main className='giveaways-body '>
+        <h1 id='current-giveaways-header' className='text-3xl'>Current Giveaways</h1>
         {giveawaysList.reverse()}
       </main>
-      <Footer />
+      <Footer admin_page_active={true} />
     </div>
   );
 };
