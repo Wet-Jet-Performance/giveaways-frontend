@@ -23,19 +23,19 @@ function App() {
 
   const getGiveaways = () => {
     axios
-      .get(`${api}/giveaways`)
+      .get(`${api}/giveaways`, {
+        timeout: 300000  // Timeout in milliseconds (5 minutes)
+      })
       .then((response) => {
-        const newGiveaways = response.data.map((giveaway) => {
-          return {
-            id: giveaway.id,
-            name: giveaway.name,
-            description: giveaway.description,
-            start_date: giveaway.start_date,
-            end_date: giveaway.end_date,
-            winners: giveaway.winners,
-            photos: giveaway.photos
-          };
-        });
+        const newGiveaways = response.data.map((giveaway) => ({
+          id: giveaway.id,
+          name: giveaway.name,
+          description: giveaway.description,
+          start_date: giveaway.start_date,
+          end_date: giveaway.end_date,
+          winners: giveaway.winners,
+          photos: giveaway.photos
+        }));
         setGiveaways(newGiveaways);
       })
       .catch((err) => {
