@@ -70,11 +70,9 @@ const ManageDynamicData = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-900 rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold mb-4 text-black">Manage Data</h1>
-
       {/* Form for creating new data */}
       <div className="mb-8">
-        <h2 className="text-xl font-semibold mb-4 text-white">Create New Data</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-white">Create New Data</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="title" className="block text-sm font-medium text-white mb-2">Title</label>
