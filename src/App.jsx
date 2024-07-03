@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import './App.css';
+// import './App.css';
 import Home from './pages/Home';
 import CurrentGiveaways from './pages/CurrentGiveaways'
 import Admin from './pages/Admin'
@@ -45,19 +45,21 @@ function App() {
 
   const getTickets = () => {
     axios
-      .get(`${api}/tickets`)
+      .get(`${api}/tickets`, {
+        timeout: 300000  // Timeout in milliseconds (5 minutes)
+      })
       .then((response) => {
-        let newTickets = {'all': []};
+        let newTickets = { 'all': [] };
         for (const ticket of response.data) {
           newTickets.all.push({
-              id: ticket.id,
-              giveaway_id: ticket.giveaway_id,
-              participant_id: ticket.participant_id,
-              giveaway_name: ticket.giveaway_name,
-              participant_name: ticket.participant_name,
-              participant_phone: ticket.participant_phone,
-              participant_email: ticket.participant_email
-            })
+            id: ticket.id,
+            giveaway_id: ticket.giveaway_id,
+            participant_id: ticket.participant_id,
+            giveaway_name: ticket.giveaway_name,
+            participant_name: ticket.participant_name,
+            participant_phone: ticket.participant_phone,
+            participant_email: ticket.participant_email
+          })
           try {
             newTickets[ticket.giveaway_id].push({
               id: ticket.id,
@@ -97,7 +99,7 @@ function App() {
             name: participant.name,
             phone_number: participant.phone_number,
             email: participant.email
-            
+
           };
         });
         setParticipants(newParticipants);
@@ -280,7 +282,7 @@ function App() {
     axios
       .delete(`${api}/winners/${winnerId}`)
       .then((response) => {
-        const newWinners = {...winners};
+        const newWinners = { ...winners };
         delete newWinners[winnerId];
         setWinners(newWinners);
         const newGiveaways = giveaways.map((giveaway) => {

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import ManageGiveaways from '../components/ManageGiveaways';
+import ManageDynamicData from '../components/ManageDynamicData';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Tickets from '../components/Tickets';
@@ -37,7 +38,7 @@ const Admin = ({ giveaways, tickets, participants, winners,  createGiveawayCallb
   )}
 
   return (
-    <div className='admin-container'>
+    <div className='admin-container bg-gray-900 text-white'>
       <NavBar />
       <div className='admin-headers'>
         <header className='management-header'>
@@ -64,11 +65,16 @@ const Admin = ({ giveaways, tickets, participants, winners,  createGiveawayCallb
             createPhotoCallback={createPhotoCallback}
             deletePhotoCallback={deletePhotoCallback}
           />
+          
+          <ManageDynamicData />
+          
           <NewGiveawayForm
             createGiveawayDialogRef={createGiveawayDialogRef}
             createGiveawayCallback={createGiveawayCallback} 
           />
         </section>
+        
+
         <section className='admin-tickets'>
           <Tickets
             tickets={tickets}
