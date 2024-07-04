@@ -67,9 +67,14 @@ const LandingPage = () => {
                 participant_id: participantId,
                 ticket_ids: ticketIds
             });
-
+        
             setMessage("Tickets sent to the given mail successfully. You can close this modal.");
         } catch (error) {
+            if (error.response && error.response.status === 409) {
+                setMessage("You can't get multiple tickets.");
+            } else {
+                setMessage("An error occurred while processing your request.");
+            }
             console.error('There was an error submitting the form!', error);
         }
 
