@@ -68,7 +68,7 @@ const LandingPage = () => {
                 ticket_ids: ticketIds
             });
 
-            setMessage("Tickets sent to the given mail successfully");
+            setMessage("Tickets sent to the given mail successfully. You can close this modal.");
         } catch (error) {
             console.error('There was an error submitting the form!', error);
         }
@@ -125,7 +125,7 @@ const LandingPage = () => {
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-white rounded-lg p-6 md:max-w-lg max-w-sm mx-auto">
                         <h2 className="text-xl font-semibold mb-4">Enter Giveaway</h2>
-                        {message && <p className="mb-4 text-green-500">{message}</p>}
+                        {message && <p className="mb-4 bg-yellow-500 text-center text-lg border rounded-lg p-1">{message}</p>}
                         <form onSubmit={handleSubmit}>
                             <div className="mb-4">
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Name</label>
