@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import ManageGiveaways from '../components/ManageGiveaways';
 import ManageDynamicData from '../components/ManageDynamicData';
+import ManageGiveawaySteps from '../components/ManageGiveawaySteps';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Tickets from '../components/Tickets';
@@ -67,6 +68,7 @@ const Admin = ({ giveaways, tickets, participants, winners,  createGiveawayCallb
           />
           
           <ManageDynamicData />
+          <ManageGiveawaySteps />
           
           <NewGiveawayForm
             createGiveawayDialogRef={createGiveawayDialogRef}
