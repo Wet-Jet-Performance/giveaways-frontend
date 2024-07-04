@@ -40,24 +40,27 @@ const LandingPage = () => {
         e.preventDefault();
 
         try {
+            setMessage("Registering Participant...");
             // Step 1: Submit participant data
             const participantResponse = await axios.post(`${api}/participants`, {
                 name,
                 phone_number: phoneNumber,
                 email
             });
-
+            
             const participantId = participantResponse.data.id;
-
+            
+            setMessage("Creating Tickets...");
             // Step 2: Submit ticket data
             const ticketResponse = await axios.post(`${api}/tickets`, {
                 giveaway_id: selectedGiveaway,
                 participant_id: participantId,
                 number_of_tickets: 5
             });
-
+            
             const ticketIds = ticketResponse.data.ids;
-
+            
+            setMessage("Sending tickets through mail...");
             // Step 3: Send email
             const emailResponse = await axios.post(`${api}/tickets/email`, {
                 giveaway_id: selectedGiveaway,
