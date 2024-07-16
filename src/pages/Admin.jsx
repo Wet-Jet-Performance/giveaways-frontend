@@ -7,8 +7,9 @@ import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Tickets from '../components/Tickets';
 import NewTicketForm from '../components/NewTicketForm';
-import './Admin.css'
 import NewGiveawayForm from '../components/NewGiveawayForm';
+import ManageTemplates from '../components/ManageTemplates';
+import './Admin.css'
 
 const Admin = ({ giveaways, tickets, participants, winners,  createGiveawayCallback, deleteGiveawayCallback, updateGiveawayCallback, createTicketCallback, deleteTicketCallback, createParticipantAndTicketCallback, createWinnerCallback, deleteWinnerCallback, createPhotoCallback, deletePhotoCallback }) => {
 
@@ -69,6 +70,7 @@ const Admin = ({ giveaways, tickets, participants, winners,  createGiveawayCallb
           
           <ManageDynamicData />
           <ManageGiveawaySteps />
+          <ManageTemplates/>
           
           <NewGiveawayForm
             createGiveawayDialogRef={createGiveawayDialogRef}
