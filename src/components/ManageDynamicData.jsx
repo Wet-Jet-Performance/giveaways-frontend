@@ -17,7 +17,6 @@ const ManageDynamicData = () => {
       try {
         const response = await axios.get(`${api}/dynamicdata`);
         setDataList(response.data);
-        console.log(response.data)
       } catch (error) {
         console.error('Error fetching data:', error);
         setMessage('Error fetching data');
