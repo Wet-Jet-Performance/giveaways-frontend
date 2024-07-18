@@ -25,7 +25,7 @@ function App() {
     axios
       .get(`${api}/giveaways`, {
         timeout: 300000  // Timeout in milliseconds (5 minutes)
-      })
+      }) 
       .then((response) => {
         const newGiveaways = response.data.map((giveaway) => ({
           id: giveaway.id,
